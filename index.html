@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Công ty 72 Truck - Hệ thống vận hành Internet</title>
+    <title>CÔNG TY TNHH VẬN TẢI VÀ THƯƠNG MẠI 72 TRUCK</title>
     <style>
         :root {
             --primary: #1e3a8a;
@@ -11,6 +11,7 @@
             --bg-body: #f8fafc;
             --border: #cbd5e1;
             --admin-color: #dc2626;
+            --success-color: #10b981;
         }
 
         body {
@@ -43,7 +44,8 @@
         .login-card h2 {
             margin-bottom: 25px;
             color: var(--primary);
-            font-size: 24px;
+            font-size: 20px;
+            font-weight: bold;
         }
 
         .login-card input {
@@ -71,28 +73,35 @@
         /* GIAO DIỆN CHÍNH */
         #main-app {
             display: none;
-            max-width: 1200px;
+            max-width: 100%;
             margin: 0 auto;
             padding: 20px;
+            box-sizing: border-box;
         }
 
         header {
             text-align: center;
             margin-bottom: 30px;
+            width: 100%;
+            display: block;
+            clear: both;
         }
 
         header h1 {
             color: var(--primary);
-            font-size: 32px;
-            margin: 0;
+            font-size: 28px;
+            margin: 0; padding: 0;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
+            font-weight: 800;
+            line-height: 1.4;
+            word-wrap: break-word;
         }
 
         .user-info {
             font-size: 14px;
             color: #475569;
-            margin-top: 5px;
+            margin-top: 10px;
             font-weight: bold;
         }
 
@@ -125,6 +134,11 @@
         .section-title.admin-style {
             color: var(--admin-color);
             border-left-color: var(--admin-color);
+        }
+        
+        .section-title.success-style {
+            color: var(--success-color);
+            border-left-color: var(--success-color);
         }
 
         .grid-layout {
@@ -186,12 +200,31 @@
         .btn-blue:hover { background-color: #1d4ed8; }
         .btn-gray { background-color: #64748b; color: white; }
         .btn-gray:hover { background-color: #475569; }
-        .btn-orange { background-color: #f97316; color: white; padding: 4px 8px; font-size: 12px; border-radius: 3px; }
+        
+        .btn-action {
+            padding: 4px 8px;
+            font-size: 11px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-weight: bold;
+            color: white;
+            margin-right: 3px;
+            margin-bottom: 2px;
+        }
+        .btn-orange { background-color: #f97316; }
         .btn-orange:hover { background-color: #ea580c; }
         .btn-orange:disabled { background-color: #cbd5e1; color: #94a3b8; cursor: not-allowed; }
+        .btn-danger { background-color: #ef4444; }
+        .btn-danger:hover { background-color: #dc2626; }
+        .btn-success { background-color: #10b981; }
+        .btn-success:hover { background-color: #059669; }
+        .btn-navy { background-color: #1e3a8a; }
+        .btn-navy:hover { background-color: #1d4ed8; }
 
         /* BẢNG DỮ LIỆU */
         .table-responsive {
+            width: 100%;
             overflow-x: auto;
         }
 
@@ -200,6 +233,7 @@
             border-collapse: collapse;
             font-size: 13px;
             text-align: left;
+            white-space: nowrap;
         }
 
         th, td {
@@ -213,14 +247,16 @@
             font-weight: bold;
         }
 
-        .btn-delete {
-            background: #ef4444;
-            color: white;
-            border: none;
-            padding: 4px 8px;
-            border-radius: 3px;
-            cursor: pointer;
+        tr.total-row {
+            background-color: #fef08a !important;
+            font-weight: bold;
+            color: #0f172a;
         }
+        
+        /* Hiển thị màu sắc dòng trạng thái */
+        tr.status-rejected { background-color: #f1f5f9 !important; } 
+        tr.status-approved { background-color: #fee2e2 !important; } 
+        tr.status-shipping { background-color: #eff6ff !important; } 
 
         .ma-vd-link {
             color: #2563eb;
@@ -232,7 +268,14 @@
             text-decoration: underline;
         }
 
-        /* BẢNG DỌC LỆNH ĐIỀU XE */
+        .admin-input {
+            width: 110px;
+            padding: 5px;
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            font-size: 13px;
+        }
+
         .output-flex {
             display: flex;
             gap: 20px;
@@ -274,15 +317,19 @@
             width: 40%;
         }
         
-        .up-badge {
+        .status-badge {
             font-size: 11px;
-            padding: 2px 4px;
-            background: #dcfce7;
-            color: #15803d;
+            padding: 2px 5px;
             border-radius: 3px;
             margin-left: 5px;
             display: inline-block;
+            font-weight: bold;
         }
+        .badge-pending { background: #fef3c7; color: #d97706; }
+        .badge-uploaded { background: #e0f2fe; color: #0369a1; }
+        .badge-rejected { background: #cbd5e1; color: #475569; }
+        .badge-approved { background: #fee2e2; color: #b91c1c; }
+        .badge-shipping { background: #dbeafe; color: #1d4ed8; }
     </style>
 
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -292,7 +339,7 @@
 
     <div id="login-screen">
         <div class="login-card">
-            <h2>HỆ THỐNG 72 TRUCK</h2>
+            <h2>CÔNG TY TNHH VẬN TẢI VÀ THƯƠNG MẠI 72 TRUCK</h2>
             <input type="text" id="username" placeholder="Tên đăng nhập" autocomplete="off">
             <input type="password" id="password" placeholder="Mật khẩu" autocomplete="off">
             <button onclick="handleLogin()">Đăng nhập</button>
@@ -301,13 +348,14 @@
 
     <div id="main-app">
         <header>
-            <h1>CÔNG TY 72 TRUCK</h1>
+            <h1>CÔNG TY TNHH VẬN TẢI VÀ THƯƠNG MẠI 72 TRUCK</h1>
             <div class="user-info" id="hien-thi-user">Tài khoản: </div>
         </header>
 
         <div class="section" id="khu-vuc-form-sale">
-            <div class="section-title">Form Nhập Liệu Đơn Hàng</div>
+            <div class="section-title" id="form-title">Form Nhập Liệu Đơn Hàng</div>
             <form id="orderForm">
+                <input type="hidden" id="edit-id-unique">
                 <div class="grid-layout">
                     <div class="form-group">
                         <label>Mã vận đơn</label>
@@ -386,14 +434,15 @@
                 </div>
 
                 <div class="btn-container">
-                    <button type="button" class="btn btn-gray" onclick="lamMoiForm()">Làm mới đơn hàng</button>
-                    <button type="button" class="btn btn-green" onclick="luuKhuVucKhachHang()">Lưu thông tin khách hàng</button>
+                    <button type="button" class="btn btn-gray" id="btn-huy-sua" onclick="lamMoiForm()" style="display:none;">Hủy sửa</button>
+                    <button type="button" class="btn btn-gray" id="btn-lam-moi" onclick="lamMoiForm()">Làm mới đơn hàng</button>
+                    <button type="button" class="btn btn-green" id="btn-luu-don" onclick="luuKhuVucKhachHang()">Lưu thông tin khách hàng</button>
                 </div>
             </form>
         </div>
 
         <div class="section" id="khu-vuc-danh-sach">
-            <div class="section-title" id="tieu-de-bang-luu">Những Đơn Hàng Đã Lưu</div>
+            <div class="section-title" id="tieu-de-bang-luu">Những Đơn Hàng Đang Xử Lý</div>
             <div class="table-responsive">
                 <table id="main-data-table">
                     <thead>
@@ -404,18 +453,24 @@
             </div>
         </div>
 
-        <div class="section" id="khu-vuc-tao-lenh">
-            <div class="section-title">Nút Tạo Đơn Hàng Vận Chuyển (Lệnh xe không lưu)</div>
-            <div class="btn-container">
-                <button type="button" class="btn btn-blue" onclick="taoLenhDieuXe('an-khach')">Tạo đơn (Ẩn Khách Hàng)</button>
-                <button type="button" class="btn btn-blue" onclick="taoLenhDieuXe('an-all')">Tạo đơn (Ẩn Khách Hàng & Ẩn Số Tiền)</button>
+        <div class="section" id="khu-vuc-doanh-so">
+            <div class="section-title success-style" id="tieu-de-doanh-so">Doanh Số Hoàn Thành</div>
+            <div class="table-responsive">
+                <table id="done-data-table">
+                    <thead>
+                        <tr id="done-header-row"></tr>
+                    </thead>
+                    <tbody id="danh-sach-doanh-so"></tbody>
+                </table>
             </div>
+        </div>
+
+        <div class="section" id="khu-vuc-tao-lenh" style="border: none; padding: 0; box-shadow: none; background: transparent;">
             <div class="output-flex" id="khu-vuc-lenh-xe"></div>
         </div>
     </div>
 
     <script>
-        // Đã đồng bộ cấu hình dữ liệu Firebase tự động từ tài khoản của bạn
         const firebaseConfig = {
             apiKey: "AIzaSyCHHo-m42GTdwal7EToMtBI_iVi4qP5jaU",
             authDomain: "truck-d14d8.firebaseapp.com",
@@ -427,7 +482,6 @@
             measurementId: "G-4M133G0YMD"
         };
         
-        // Khởi tạo Firebase kết nối Internet toàn cầu
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
@@ -459,11 +513,16 @@
                 const userBadge = document.getElementById('hien-thi-user');
                 if (LA_ADMIN) {
                     userBadge.innerHTML = 'Tài khoản: <span class="admin-badge">ADMINISTRATOR</span>';
-                    document.getElementById('khu-vuc-form-sale').style.display = 'none';
-                    document.getElementById('tieu-de-bang-luu').innerText = "Tổng hợp toàn bộ đơn hàng hệ thống (Tất cả Sale)";
+                    document.getElementById('khu-vuc-form-sale').style.display = 'block'; 
+                    document.getElementById('form-title').innerText = "Form Xem / Chỉnh Sửa Đơn Hệ Thống (Dành Cho Admin)";
+                    document.getElementById('tieu-de-bang-luu').innerText = "Bảng Điều Phối Đơn Hàng Đang Chạy";
                     document.getElementById('tieu-de-bang-luu').classList.add('admin-style');
+                    document.getElementById('tieu-de-doanh-so').innerText = "Tổng Hợp Toàn Bộ Doanh Số Hoàn Thành (Tất Cả Sale)";
                 } else {
                     userBadge.innerText = "Nhân viên Sale: " + u.toUpperCase();
+                    document.getElementById('khu-vuc-form-sale').style.display = 'block';
+                    document.getElementById('form-title').innerText = "Form Nhập Liệu Đơn Hàng";
+                    document.getElementById('tieu-de-doanh-so').innerText = "Doanh Số Hoàn Thành Của Bạn";
                 }
                 
                 khoiTaoBanDau();
@@ -473,12 +532,12 @@
         }
 
         function sinhMaVanDon() {
+            if (LA_ADMIN) return;
             const soNgauNhien = Math.floor(Math.random() * 100000000) + 1;
             document.getElementById('ma-van-don').value = "T-" + soNgauNhien;
         }
 
         function tinhToanCuocVAT() {
-            if (LA_ADMIN) return;
             const chonVat = document.getElementById('vat').value;
             const cuocKhach = parseFloat(document.getElementById('cuoc-khach').value) || 0;
             const oCuocTongGroup = document.getElementById('group-cuoc-tong');
@@ -494,10 +553,9 @@
         }
 
         function khoiTaoBanDau() {
-            if (!LA_ADMIN) sinhMaVanDon();
+            sinhMaVanDon();
             taoCauTrucHeaderBang();
             
-            // ĐỒNG BỘ REALTIME QUA MẠNG CLOUD
             database.ref('orders').on('value', (snapshot) => {
                 KHO_DU_LIEU_INTERNET = snapshot.val() || {};
                 hienThiDuLieuRaBang();
@@ -505,25 +563,41 @@
         }
 
         function lamMoiForm() {
-            if (LA_ADMIN) return;
             document.getElementById('orderForm').reset();
+            document.getElementById('edit-id-unique').value = '';
+            if (LA_ADMIN) {
+                document.getElementById('form-title').innerText = "Form Xem / Chỉnh Sửa Đơn Hệ Thống (Dành Cho Admin)";
+                document.getElementById('btn-luu-don').innerText = "Admin Lưu cập nhật đơn";
+            } else {
+                document.getElementById('form-title').innerText = "Form Nhập Liệu Đơn Hàng";
+                document.getElementById('btn-luu-don').innerText = "Lưu thông tin khách hàng";
+            }
+            document.getElementById('btn-huy-sua').style.display = "none";
+            document.getElementById('btn-lam-moi').style.display = "inline-block";
             sinhMaVanDon();
             tinhToanCuocVAT();
         }
 
         function taoCauTrucHeaderBang() {
-            const headerRow = document.getElementById('table-header-row');
-            let baseHeaders = `<th>Mã vận đơn</th><th>Tên khách hàng</th><th>Số điện thoại</th><th>Tên hàng hoá</th><th>Điểm bốc</th><th>Điểm giao</th><th>Cước khách</th><th>VAT</th><th>Cước tổng</th>`;
-            if (LA_ADMIN) {
-                baseHeaders = `<th>Người lên đơn</th>` + baseHeaders + `<th>Hành động</th>`;
-            } else {
-                baseHeaders = baseHeaders + `<th>Đồng bộ hệ thống</th>`;
-            }
-            headerRow.innerHTML = baseHeaders;
+            const fieldsAdminRunning = `
+                <th>Mã vận đơn</th><th>Tên Sale</th><th>Tên khách hàng</th><th>Số điện thoại</th><th>Tên hàng hoá</th>
+                <th>Điểm bốc</th><th>Điểm giao</th><th>Cước khách hàng</th><th>Cước xe (Điều vận điền)</th>
+                <th>Lợi nhuận</th><th>% Lợi nhuận</th><th>BKS</th><th>Tên lái xe</th><th>SĐT lái xe</th><th>Hành động</th>`;
+
+            const fieldsAdminDone = `
+                <th>Mã vận đơn</th><th>Tên Sale</th><th>Tên khách hàng</th><th>Số điện thoại</th><th>Tên hàng hoá</th>
+                <th>Điểm bốc</th><th>Điểm giao</th><th>Cước khách hàng</th><th>Cước xe</th>
+                <th>Lợi nhuận</th><th>% Lợi nhuận</th><th>BKS</th><th>Tên lái xe</th><th>SĐT lái xe</th>`;
+            
+            const fieldsSale = `
+                <th>Mã vận đơn</th><th>Tên khách hàng</th><th>Số điện thoại</th><th>Tên hàng hoá</th>
+                <th>Điểm bốc</th><th>Điểm giao</th><th>Cước khách</th><th>VAT</th><th>Cước tổng</th><th>Trạng thái / Đồng bộ</th>`;
+
+            document.getElementById('table-header-row').innerHTML = LA_ADMIN ? fieldsAdminRunning : fieldsSale;
+            document.getElementById('done-header-row').innerHTML = LA_ADMIN ? fieldsAdminDone : fieldsSale;
         }
 
         function luuKhuVucKhachHang() {
-            if (LA_ADMIN) return;
             const tenK = document.getElementById('ten-khach').value.trim();
             const dt = document.getElementById('sdt').value.trim();
 
@@ -534,11 +608,18 @@
 
             const giaTriCuoc = parseFloat(document.getElementById('cuoc-khach').value) || 0;
             const coVat = document.getElementById('vat').value;
-            const idUnique = Date.now() + "_" + Math.random().toString(36).substr(2, 5);
+            const isEdit = document.getElementById('edit-id-unique').value;
+            
+            if (LA_ADMIN && !isEdit) {
+                alert('Tài khoản Admin không tự tạo đơn mới, vui lòng bấm nút "Sửa" dưới danh sách đơn của Sale để chỉnh sửa dữ liệu!');
+                return;
+            }
+
+            const idUnique = isEdit || (Date.now() + "_" + Math.random().toString(36).substr(2, 5));
 
             const chiTietDon = {
                 idUnique: idUnique,
-                chuDon: TAI_KHOAN_HIEN_TAI,
+                chuDon: isEdit ? (KHO_DU_LIEU_INTERNET[idUnique]?.chuDon || TAI_KHOAN_HIEN_TAI) : TAI_KHOAN_HIEN_TAI,
                 maVanDon: document.getElementById('ma-van-don').value,
                 tenKhach: tenK,
                 sdt: dt,
@@ -555,47 +636,244 @@
                 vat: coVat,
                 cuocTong: coVat === 'Có' ? giaTriCuoc * 1.08 : 0,
                 ghiChu: document.getElementById('ghi-chu').value,
-                daUpLenAdmin: false
+                daUpLenAdmin: isEdit ? (KHO_DU_LIEU_INTERNET[idUnique]?.daUpLenAdmin || false) : false,
+                trangThaiDon: isEdit ? (KHO_DU_LIEU_INTERNET[idUnique]?.trangThaiDon || "Mới tạo") : "Mới tạo", 
+                cuocXe: isEdit ? (KHO_DU_LIEU_INTERNET[idUnique]?.cuocXe || 0) : 0,
+                bks: isEdit ? (KHO_DU_LIEU_INTERNET[idUnique]?.bks || "") : "",
+                tenLaiXe: isEdit ? (KHO_DU_LIEU_INTERNET[idUnique]?.tenLaiXe || "") : "",
+                sdtLaiXe: isEdit ? (KHO_DU_LIEU_INTERNET[idUnique]?.sdtLaiXe || "") : ""
             };
 
             database.ref('orders/' + idUnique).set(chiTietDon)
-            .then(() => alert('Đã lưu thông tin đơn hàng thành công!'))
-            .catch(() => alert('Lỗi đường truyền mạng, hãy kiểm tra lại kết nối.'));
+            .then(() => {
+                alert('Đã lưu dữ liệu lên hệ thống đám mây thành công!');
+                lamMoiForm();
+            })
+            .catch(() => alert('Lỗi đường truyền Internet.'));
         }
 
         function hienThiDuLieuRaBang() {
-            const tbody = document.getElementById('danh-sach-da-luu');
-            tbody.innerHTML = '';
+            const tbodyRunning = document.getElementById('danh-sach-da-luu');
+            const tbodyDone = document.getElementById('danh-sach-doanh-so');
+            tbodyRunning.innerHTML = '';
+            tbodyDone.innerHTML = '';
+
+            let runCK = 0, runCX = 0, runLN = 0, runPCT = [];
+            let doneCK = 0, doneCX = 0, doneLN = 0, donePCT = [];
 
             Object.keys(KHO_DU_LIEU_INTERNET).forEach((key) => {
                 const don = KHO_DU_LIEU_INTERNET[key];
-                if (LA_ADMIN && !don.daUpLenAdmin) return; 
+                if (LA_ADMIN && don.trangThaiDon === "Mới tạo") return; 
                 if (!LA_ADMIN && don.chuDon !== TAI_KHOAN_HIEN_TAI) return;
 
                 const row = document.createElement('tr');
-                let cotMaVD = `<td><a class="ma-vd-link" onclick="xemLaiChiTietDon('${don.idUnique}')"><b>${don.maVanDon}</b></a>${don.daUpLenAdmin && !LA_ADMIN ? '<span class="up-badge">Đã Up</span>':''}</td>`;
-                let noiDungRow = `<td>${don.tenKhach}</td><td>${don.sdt}</td><td>${don.tenHang}</td><td>${don.diemBoc}</td><td>${don.diemGiao}</td><td>${don.cuocKhach ? don.cuocKhach.toLocaleString('vi-VN') + ' đ' : '0'}</td><td>${don.vat}</td><td>${don.cuocTong ? don.cuocTong.toLocaleString('vi-VN') + ' đ' : 'Không'}</td>`;
+                const cKhach = parseFloat(don.cuocKhach) || 0;
+                const cXe = parseFloat(don.cuocXe) || 0;
+                const loiNhuan = cKhach - cXe;
+                const phanTram = cKhach > 0 ? (loiNhuan / cKhach) * 100 : 0;
 
                 if (LA_ADMIN) {
-                    row.innerHTML = `<td><b style="color:var(--admin-color); text-transform: uppercase;">${don.chuDon}</b></td>` + cotMaVD + noiDungRow + `<td><button class="btn-delete" onclick="adminXoaDon('${don.idUnique}')">Xóa đơn</button></td>`;
+                    if (don.trangThaiDon === "Hoàn thành") {
+                        doneCK += cKhach; doneCX += cXe; doneLN += loiNhuan; donePCT.push(phanTram);
+                    } else {
+                        runCK += cKhach; runCX += cXe; runLN += loiNhuan; runPCT.push(phanTram);
+                    }
+
+                    if (don.trangThaiDon === "Bị trả lại") row.className = 'status-rejected';
+                    if (don.trangThaiDon === "Điều vận bố trí xe") row.className = 'status-approved';
+                    if (don.trangThaiDon === "Đang vận chuyển") row.className = 'status-shipping';
+
+                    if (don.trangThaiDon === "Hoàn thành") {
+                        row.innerHTML = `
+                            <td><b>${don.maVanDon}</b></td>
+                            <td><b style="color:var(--primary); text-transform:uppercase;">${don.chuDon}</b></td>
+                            <td>${don.tenKhach}</td><td>${don.sdt}</td><td>${don.tenHang}</td><td>${don.diemBoc}</td><td>${don.diemGiao}</td>
+                            <td><b>${cKhach.toLocaleString('vi-VN')} đ</b></td><td><b>${cXe.toLocaleString('vi-VN')} đ</b></td>
+                            <td style="color: ${loiNhuan >= 0 ? 'green' : 'red'}; font-weight: bold;">${loiNhuan.toLocaleString('vi-VN')} đ</td>
+                            <td>${phanTram.toFixed(1)}%</td><td>${don.bks || ''}</td><td>${don.tenLaiXe || ''}</td><td>${don.sdtLaiXe || ''}</td>
+                        `;
+                    } else {
+                        let cotHanhDong = `
+                            <td>
+                                <button class="btn-action btn-danger" style="background:#cbd5e1; color:#334155;" onclick="chuyenTrangThaiDon('${don.idUnique}', 'Bị trả lại')">Trả lại đơn</button>
+                                <button class="btn-action btn-danger" onclick="chuyenTrangThaiDon('${don.idUnique}', 'Điều vận bố trí xe')">Duyệt đơn</button>
+                                <button class="btn-action btn-blue" onclick="chuyenTrangThaiDon('${don.idUnique}', 'Đang vận chuyển')">Đang vận chuyển</button>
+                                <button class="btn-action btn-success" onclick="chuyenTrangThaiDon('${don.idUnique}', 'Hoàn thành')">Hoàn thành</button>
+                                <button class="btn-action btn-blue" style="background:#4f46e5;" onclick="kichHoatSuaDon('${don.idUnique}')">Sửa đơn</button>
+                                <button class="btn-action" style="background:#475569;" onclick="huyChuyenDon('${don.idUnique}')">Hủy chuyến</button>
+                            </td>`;
+
+                        row.innerHTML = `
+                            <td><b>${don.maVanDon}</b></td>
+                            <td><b style="color:var(--primary); text-transform:uppercase;">${don.chuDon}</b></td>
+                            <td>${don.tenKhach}</td><td>${don.sdt}</td><td>${don.tenHang}</td><td>${don.diemBoc}</td><td>${don.diemGiao}</td>
+                            <td><b>${cKhach.toLocaleString('vi-VN')} đ</b></td>
+                            <td>
+                                <input type="number" class="admin-input no-arrows" value="${don.cuocXe || ''}" placeholder="Cước xe..." onchange="updateTruongAdmin('${don.idUnique}', 'cuocXe', this.value)">
+                            </td>
+                            <td style="color: ${loiNhuan >= 0 ? 'green' : 'red'}; font-weight: bold;">${loiNhuan.toLocaleString('vi-VN')} đ</td>
+                            <td>${phanTram.toFixed(1)}%</td>
+                            <td><input type="text" class="admin-input" value="${don.bks || ''}" placeholder="BKS..." onchange="updateTruongAdmin('${don.idUnique}', 'bks', this.value)"></td>
+                            <td><input type="text" class="admin-input" value="${don.tenLaiXe || ''}" placeholder="Tài xế..." onchange="updateTruongAdmin('${don.idUnique}', 'tenLaiXe', this.value)"></td>
+                            <td><input type="text" class="admin-input" value="${don.sdtLaiXe || ''}" placeholder="SĐT..." onchange="updateTruongAdmin('${don.idUnique}', 'sdtLaiXe', this.value)"></td>
+                            ${cotHanhDong}
+                        `;
+                    }
                 } else {
-                    let nutUpDon = don.daUpLenAdmin 
-                        ? `<td><button class="btn-orange" disabled>Đã up Admin</button></td>`
-                        : `<td><button class="btn-orange" onclick="upDonLenAdmin('${don.idUnique}')">Up đơn</button></td>`;
-                    row.innerHTML = cotMaVD + noiDungRow + nutUpDon;
+                    // PHÍA NHÂN VIÊN SALE
+                    if (don.trangThaiDon === "Hoàn thành") {
+                        row.innerHTML = `
+                            <td><b>${don.maVanDon}</b></td><td>${don.tenKhach}</td><td>${don.sdt}</td><td>${don.tenHang}</td>
+                            <td>${don.diemBoc}</td><td>${don.diemGiao}</td><td>${cKhach.toLocaleString('vi-VN')} đ</td><td>${don.vat}</td>
+                            <td>${don.cuocTong ? don.cuocTong.toLocaleString('vi-VN') + ' đ' : 'Không'}</td>
+                            <td><span class="status-badge badge-approved">Thành công ✔</span></td>`;
+                    } else {
+                        if (don.trangThaiDon === "Bị trả lại") row.className = 'status-rejected';
+
+                        let badge = '<span class="status-badge badge-pending">Chưa Up</span>';
+                        let btnUpDown = `<button class="btn-action btn-orange" onclick="upDonLenAdmin('${don.idUnique}')">Up đơn</button>`;
+                        
+                        // LOGIC BẢO MẬT PHÂN QUYỀN: Sale chỉ sửa được đơn khi Chưa Duyệt hoặc Bị Sếp Trả Lại
+                        let choPhepSua = true; 
+
+                        if (don.trangThaiDon === "Chờ duyệt") {
+                            badge = '<span class="status-badge badge-uploaded">Chờ duyệt...</span>';
+                            btnUpDown = `<button class="btn-action btn-orange" disabled>Đang đợi sếp</button>`;
+                        } else if (don.trangThaiDon === "Bị trả lại") {
+                            badge = '<span class="status-badge badge-rejected">Bị trả lại ❌</span>';
+                        } else if (don.trangThaiDon === "Điều vận bố trí xe") {
+                            badge = '<span class="status-badge badge-approved" style="background:#fee2e2; color:#b91c1c;">Đã duyệt 🚚</span>';
+                            btnUpDown = `<button class="btn-action btn-danger" disabled>Đã duyệt</button>`;
+                            choPhepSua = false; // Khóa sửa đơn
+                        } else if (don.trangThaiDon === "Đang vận chuyển") {
+                            badge = '<span class="status-badge badge-shipping">Đang đi 🛣</span>';
+                            btnUpDown = `<button class="btn-action btn-blue" disabled>Đang chạy</button>`;
+                            choPhepSua = false; // Khóa sửa đơn
+                        }
+
+                        // Hiện hoặc ẩn nút Sửa của Sale theo phân quyền trạng thái điều vận
+                        let btnSua = choPhepSua 
+                            ? `<button class="btn-action btn-blue" onclick="kichHoatSuaDon('${don.idUnique}')">Sửa</button>`
+                            : `<button class="btn-action btn-gray" disabled style="cursor: not-allowed; opacity: 0.5;">Khóa sửa</button>`;
+
+                        row.innerHTML = `
+                            <td><a class="ma-vd-link" onclick="xemLaiChiTietDon('${don.idUnique}')"><b>${don.maVanDon}</b></a></td>
+                            <td>${don.tenKhach}</td><td>${don.sdt}</td><td>${don.tenHang}</td><td>${don.diemBoc}</td><td>${don.diemGiao}</td>
+                            <td>${cKhach.toLocaleString('vi-VN')} đ</td><td>${don.vat}</td><td>${don.cuocTong ? don.cuocTong.toLocaleString('vi-VN') + ' đ' : 'Không'}</td>
+                            <td>${badge} ${btnUpDown} ${btnSua}</td>`;
+                    }
                 }
-                tbody.appendChild(row);
+
+                if (don.trangThaiDon === "Hoàn thành") {
+                    tbodyDone.appendChild(row);
+                } else {
+                    tbodyRunning.appendChild(row);
+                }
             });
+
+            if (LA_ADMIN) {
+                tinhDongTongCong(tbodyRunning, runCK, runCX, runLN, runPCT, true);
+                tinhDongTongCong(tbodyDone, doneCK, doneCX, doneLN, donePCT, false);
+            }
+        }
+
+        function tinhDongTongCong(tbody, tk, tx, ln, arrPct, coHanhDong) {
+            if (tbody.children.length > 0 && arrPct.length > 0) {
+                const tbPct = arrPct.reduce((a, b) => a + b, 0) / arrPct.length;
+                const tr = document.createElement('tr');
+                tr.className = 'total-row';
+                let phanDuHanhDong = coHanhDong ? `<td></td>` : "";
+                tr.innerHTML = `
+                    <td>TỔNG CỘNG</td><td></td><td></td><td></td><td></td><td></td><td></td>
+                    <td>${tk.toLocaleString('vi-VN')} đ</td><td>${tx.toLocaleString('vi-VN')} đ</td>
+                    <td style="color: ${ln >= 0 ? 'green' : 'red'};">${ln.toLocaleString('vi-VN')} đ</td>
+                    <td>${tbPct.toFixed(1)}%</td><td></td><td></td><td></td>${phanDuHanhDong}`;
+                tbody.appendChild(tr);
+            }
+        }
+
+        function kichHoatSuaDon(idUnique) {
+            const don = KHO_DU_LIEU_INTERNET[idUnique];
+            if (!don) return;
+
+            document.getElementById('edit-id-unique').value = idUnique;
+            document.getElementById('ma-van-don').value = don.maVanDon;
+            document.getElementById('ten-khach').value = don.tenKhach;
+            document.getElementById('sdt').value = don.sdt;
+            document.getElementById('ten-hang').value = don.tenHang;
+            document.getElementById('diem-boc').value = don.diemBoc;
+            document.getElementById('diem-giao').value = don.diemGiao;
+            document.getElementById('chi-tiet-hang').value = don.chiTietHang;
+            document.getElementById('trong-luong').value = don.trongLuong;
+            document.getElementById('khoi-met').value = don.khoiMet;
+            document.getElementById('yeu-cau-xe').value = don.yeuCauXe;
+            document.getElementById('time-boc').value = don.timeBoc;
+            document.getElementById('time-giao').value = don.timeGiao;
+            document.getElementById('cuoc-khach').value = don.cuocKhach;
+            document.getElementById('vat').value = don.vat;
+            document.getElementById('ghi-chu').value = don.ghiChu;
+
+            tinhToanCuocVAT();
+
+            if (LA_ADMIN) {
+                document.getElementById('form-title').innerText = "ADMIN ĐANG SỬA ĐƠN HỆ THỐNG: " + don.maVanDon;
+                document.getElementById('btn-luu-don').innerText = "Admin Lưu Cập Nhật Đơn";
+            } else {
+                document.getElementById('form-title').innerText = "ĐANG SỬA ĐƠN HÀNG: " + don.maVanDon;
+                document.getElementById('btn-luu-don').innerText = "Cập nhật đơn hàng";
+            }
+            
+            document.getElementById('btn-huy-sua').style.display = "inline-block";
+            document.getElementById('btn-lam-moi').style.display = "none";
+            document.getElementById('khu-vuc-form-sale').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Logic thay đổi trạng thái kèm ràng buộc khóa Cước khách & Cước xe khi Hoàn thành
+        function chuyenTrangThaiDon(idUnique, trangThaiMoi) {
+            const don = KHO_DU_LIEU_INTERNET[idUnique];
+            if (!don) return;
+
+            if (trangThaiMoi === 'Hoàn thành') {
+                const cKhach = parseFloat(don.cuocKhach) || 0;
+                const cXe = parseFloat(don.cuocXe) || 0;
+
+                // THẮT CHẶT QUY TRÌNH: Kiểm tra điều kiện số tiền trước khi chốt doanh thu
+                if (cKhach <= 0 || cXe <= 0) {
+                    alert("Không thể hoàn thành đơn hàng! Vui lòng điền đầy đủ thông tin Cước khách và Cước xe trước khi chốt doanh số.");
+                    return;
+                }
+            }
+
+            let msg = "";
+            if (trangThaiMoi === 'Điều vận bố trí xe') msg = "Xác nhận DUYỆT ĐƠN HÀNG này và chuyển sang màu ĐỎ? (Hệ thống sẽ khóa quyền sửa đổi của Sale)";
+            if (trangThaiMoi === 'Đang vận chuyển') msg = "Xác nhận đơn hàng ĐANG VẬN CHUYỂN và chuyển sang màu XANH?";
+            if (trangThaiMoi === 'Hoàn thành') msg = "Xác nhận HOÀN THÀNH đơn hàng và đưa vào kho doanh số chốt sổ?";
+            if (trangThaiMoi === 'Bị trả lại') msg = "Xác nhận TRẢ LẠI đơn hàng này cho Sale sửa đổi?";
+
+            if (confirm(msg)) {
+                database.ref('orders/' + idUnique).update({ trangThaiDon: trangThaiMoi });
+            }
+        }
+
+        function huyChuyenDon(idUnique) {
+            if (confirm("CẢNH BÁO: Bạn chắc chắn muốn HỦY CHUYẾN đơn hàng này? Đơn hàng sẽ biến mất hoàn toàn khỏi hệ thống!")) {
+                database.ref('orders/' + idUnique).remove();
+            }
+        }
+
+        function updateTruongAdmin(idUnique, truongDuLieu, giaTri) {
+            let obj = {}; obj[truongDuLieu] = giaTri;
+            database.ref('orders/' + idUnique).update(obj);
         }
 
         function upDonLenAdmin(idUnique) {
             if (confirm("Bạn và Khách hàng phải xác nhận lại thông tin trước khi Up đơn, bạn chắc chắn Up đơn?")) {
-                database.ref('orders/' + idUnique).update({ daUpLenAdmin: true });
+                database.ref('orders/' + idUnique).update({ trangThaiDon: "Chờ duyệt", daUpLenAdmin: true });
             }
         }
 
         function adminXoaDon(idUnique) {
-            if (confirm('CẢNH BÁO ADMIN: Bạn có chắc chắn muốn xóa vĩnh viễn đơn hàng này?')) {
+            if (confirm('CẢNH BÁO ADMIN: Hành động này sẽ xóa vĩnh viễn đơn lưu trữ khỏi hệ thống?')) {
                 database.ref('orders/' + idUnique).remove();
             }
         }
@@ -627,52 +905,8 @@
             if (don.vat === 'Có' && don.cuocKhach > 0) htmlRows += `<tr><td>Cước tổng</td><td><strong>${don.cuocTong.toLocaleString('vi-VN')} đ</strong></td></tr>`;
             htmlRows += thuThapDong("Ghi chú", don.ghiChu);
 
-            document.getElementById('khu-vuc-lenh-xe').innerHTML = `<div class="vertical-table-card" style="border-color: #10b981;"><h3 style="color:#10b981; border-bottom-color:#d1fae5;">KIỂM TRA ĐƠN: ${don.maVanDon} (${don.chuDon.toUpperCase()})</h3><table class="v-table">${htmlRows}</table></div>`;
+            document.getElementById('khu-vuc-lenh-xe').innerHTML = `<div class="vertical-table-card" style="border-color: #10b981;"><h3 style="color:#10b981; border-bottom-color:#d1fae5;">XEM CHI TIẾT ĐƠN: ${don.maVanDon}</h3><table class="v-table">${htmlRows}</table></div>`;
             document.getElementById('khu-vuc-tao-lenh').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function taoLenhDieuXe(cheDo) {
-            const ma = document.getElementById('ma-van-don').value.trim();
-            const hang = document.getElementById('ten-hang').value.trim();
-            const boc = document.getElementById('diem-boc').value.trim();
-            const giao = document.getElementById('diem-giao').value.trim();
-            const chitiet = document.getElementById('chi-tiet-hang').value.trim();
-            const tluong = document.getElementById('trong-luong').value.trim();
-            const kmet = document.getElementById('khoi-met').value.trim();
-            const xe = document.getElementById('yeu-cau-xe').value.trim();
-            const tBoc = document.getElementById('time-boc').value.trim();
-            const tGiao = document.getElementById('time-giao').value.trim();
-            const giaCuoc = parseFloat(document.getElementById('cuoc-khach').value) || 0;
-            const coVat = document.getElementById('vat').value.trim();
-            const note = document.getElementById('ghi-chu').value.trim();
-
-            let htmlRows = "";
-            function thuThapDong(tieuDe, giaTri) {
-                if (giaTri && giaTri !== "") return `<tr><td>${tieuDe}</td><td>${giaTri}</td></tr>`;
-                return "";
-            }
-
-            htmlRows += thuThapDong("Mã vận đơn", ma ? `<strong style="color:red;">${ma}</strong>` : "");
-            htmlRows += thuThapDong("Tên hàng hoá", hang);
-            htmlRows += thuThapDong("Điểm bốc hàng", boc);
-            htmlRows += thuThapDong("Điểm giao hàng", giao);
-            htmlRows += thuThapDong("Chi tiết hàng hoá", chitiet);
-            htmlRows += thuThapDong("Trọng lượng", tluong);
-            htmlRows += thuThapDong("Khối hoặc mét xe", kmet);
-            htmlRows += thuThapDong("Yêu cầu xe", xe ? `<strong>${xe}</strong>` : "");
-            htmlRows += thuThapDong("Time bốc", tBoc);
-            htmlRows += thuThapDong("Time giao", tGiao);
-
-            if (cheDo === 'an-khach') {
-                if (giaCuoc > 0) htmlRows += `<tr><td>Cước khách</td><td>${giaCuoc.toLocaleString('vi-VN')} đ</td></tr>`;
-                htmlRows += `<tr><td>VAT</td><td>${coVat}</td></tr>`;
-                if (coVat === 'Có' && giaCuoc > 0) htmlRows += `<tr><td>Cước tổng</td><td><strong>${(giaCuoc * 1.08).toLocaleString('vi-VN')} đ</strong></td></tr>`;
-            } else if (cheDo === 'an-all') {
-                htmlRows += `<tr><td>VAT</td><td>${coVat}</td></tr>`;
-            }
-            htmlRows += thuThapDong("Ghi chú", note);
-
-            document.getElementById('khu-vuc-lenh-xe').insertAdjacentHTML('afterbegin', `<div class="vertical-table-card"><h3>THÔNG TIN ĐƠN HÀNG VẬN CHUYỂN</h3><table class="v-table">${htmlRows}</table></div>`);
         }
     </script>
 </body>
