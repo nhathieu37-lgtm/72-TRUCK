@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Công ty 72 Truck - Hệ thống vận hành Internet</title>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-hover: #1d4ed8;
+            --bg-body: #f8fafc;
+            --border: #cbd5e1;
+            --admin-color: #dc2626;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--bg-body);
+            margin: 0;
+            padding: 0;
+            color: #334155;
+        }
+
+        /* KHUNG ĐĂNG NHẬP */
+        #login-screen {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #1e3a8a, #0f172a);
+        }
+
+        .login-card {
+            background: #ffffff;
+            padding: 35px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 360px;
+            text-align: center;
+        }
+
+        .login-card h2 {
+            margin-bottom: 25px;
+            color: var(--primary);
+            font-size: 24px;
+        }
+
+        .login-card input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 15px;
+        }
+
+        .login-card button {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        /* GIAO DIỆN CHÍNH */
+        #main-app {
+            display: none;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            color: var(--primary);
+            font-size: 32px;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .user-info {
+            font-size: 14px;
+            color: #475569;
+            margin-top: 5px;
+            font-weight: bold;
+        }
+
+        .admin-badge {
+            color: var(--admin-color);
+            border: 1px solid var(--admin-color);
+            padding: 2px 6px;
+            border-radius: 4px;
+            background: #fef2f2;
+        }
+
+        .section {
+            background: #ffffff;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--primary);
+            border-left: 5px solid var(--primary);
+            padding-left: 10px;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        .section-title.admin-style {
+            color: var(--admin-color);
+            border-left-color: var(--admin-color);
+        }
+
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #475569;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 14px;
+            outline: none;
+            box-sizing: border-box;
+        }
+
+        .no-arrows::-webkit-outer-spin-button,
+        .no-arrows::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        .no-arrows {
+            -moz-appearance: textfield;
+        }
+
+        .btn-container {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+
+        .btn-green { background-color: #10b981; color: white; }
+        .btn-green:hover { background-color: #059669; }
+        .btn-blue { background-color: #2563eb; color: white; }
+        .btn-blue:hover { background-color: #1d4ed8; }
+        .btn-gray { background-color: #64748b; color: white; }
+        .btn-gray:hover { background-color: #475569; }
+        .btn-orange { background-color: #f97316; color: white; padding: 4px 8px; font-size: 12px; border-radius: 3px; }
+        .btn-orange:hover { background-color: #ea580c; }
+        .btn-orange:disabled { background-color: #cbd5e1; color: #94a3b8; cursor: not-allowed; }
+
+        /* BẢNG DỮ LIỆU */
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            text-align: left;
+        }
+
+        th, td {
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+        }
+
+        th {
+            background-color: #f1f5f9;
+            color: #1e293b;
+            font-weight: bold;
+        }
+
+        .btn-delete {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .ma-vd-link {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .ma-vd-link:hover {
+            text-decoration: underline;
+        }
+
+        /* BẢNG DỌC LỆNH ĐIỀU XE */
+        .output-flex {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .vertical-table-card {
+            background: #fff;
+            border: 2px solid var(--primary);
+            border-radius: 6px;
+            padding: 15px;
+            flex: 1;
+            min-width: 300px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .vertical-table-card h3 {
+            margin-top: 0;
+            font-size: 15px;
+            color: var(--primary);
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .v-table {
+            width: 100%;
+        }
+
+        .v-table td {
+            padding: 8px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .v-table td:first-child {
+            font-weight: bold;
+            background-color: #f8fafc;
+            width: 40%;
+        }
+        
+        .up-badge {
+            font-size: 11px;
+            padding: 2px 4px;
+            background: #dcfce7;
+            color: #15803d;
+            border-radius: 3px;
+            margin-left: 5px;
+            display: inline-block;
+        }
+    </style>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+</head>
+<body>
+
+    <div id="login-screen">
+        <div class="login-card">
+            <h2>HỆ THỐNG 72 TRUCK</h2>
+            <input type="text" id="username" placeholder="Tên đăng nhập" autocomplete="off">
+            <input type="password" id="password" placeholder="Mật khẩu" autocomplete="off">
+            <button onclick="handleLogin()">Đăng nhập</button>
+        </div>
+    </div>
+
+    <div id="main-app">
+        <header>
+            <h1>CÔNG TY 72 TRUCK</h1>
+            <div class="user-info" id="hien-thi-user">Tài khoản: </div>
+        </header>
+
+        <div class="section" id="khu-vuc-form-sale">
+            <div class="section-title">Form Nhập Liệu Đơn Hàng</div>
+            <form id="orderForm">
+                <div class="grid-layout">
+                    <div class="form-group">
+                        <label>Mã vận đơn</label>
+                        <input type="text" id="ma-van-don" readonly style="background-color: #e2e8f0; font-weight: bold; color: #0f172a;">
+                    </div>
+                    <div class="form-group">
+                        <label>Tên khách hàng</label>
+                        <input type="text" id="ten-khach" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Số điện thoại</label>
+                        <input type="text" id="sdt" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Tên hàng hoá</label>
+                        <input type="text" id="ten-hang">
+                    </div>
+                    <div class="form-group">
+                        <label>Điểm bốc hàng</label>
+                        <input type="text" id="diem-boc">
+                    </div>
+                    <div class="form-group">
+                        <label>Điểm giao hàng</label>
+                        <input type="text" id="diem-giao">
+                    </div>
+                    <div class="form-group">
+                        <label>Chi tiết hàng hoá</label>
+                        <input type="text" id="chi-tiet-hang">
+                    </div>
+                    <div class="form-group">
+                        <label>Trọng lượng</label>
+                        <input type="text" id="trong-luong">
+                    </div>
+                    <div class="form-group">
+                        <label>Khối hoặc mét xe</label>
+                        <input type="text" id="khoi-met">
+                    </div>
+                    <div class="form-group">
+                        <label>Yêu cầu xe</label>
+                        <select id="yeu-cau-xe">
+                            <option value="Thùng bạt">Thùng bạt</option>
+                            <option value="Thùng kín">Thùng kín</option>
+                            <option value="Bạt kín đều được">Bạt kín đều được</option>
+                            <option value="Mooc sàn 12.4 mét">Mooc sàn 12.4 mét</option>
+                            <option value="Mooc sàn 15 mét">Mooc sàn 15 mét</option>
+                            <option value="Fooc lùn">Fooc lùn</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Time bốc</label>
+                        <input type="text" id="time-boc">
+                    </div>
+                    <div class="form-group">
+                        <label>Time giao</label>
+                        <input type="text" id="time-giao">
+                    </div>
+                    <div class="form-group">
+                        <label>Cước khách</label>
+                        <input type="number" id="cuoc-khach" class="no-arrows" oninput="tinhToanCuocVAT()">
+                    </div>
+                    <div class="form-group">
+                        <label>VAT</label>
+                        <select id="vat" onchange="tinhToanCuocVAT()">
+                            <option value="Không">Không</option>
+                            <option value="Có">Có</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="group-cuoc-tong" style="display: none;">
+                        <label>Cước tổng (Gồm VAT)</label>
+                        <input type="text" id="cuoc-tong" readonly style="background-color: #fef08a; font-weight: bold; color: #b45309;">
+                    </div>
+                    <div class="form-group" style="grid-column: span 1;">
+                        <label>Ghi chú</label>
+                        <textarea id="ghi-chu" rows="1"></textarea>
+                    </div>
+                </div>
+
+                <div class="btn-container">
+                    <button type="button" class="btn btn-gray" onclick="lamMoiForm()">Làm mới đơn hàng</button>
+                    <button type="button" class="btn btn-green" onclick="luuKhuVucKhachHang()">Lưu thông tin khách hàng</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="section" id="khu-vuc-danh-sach">
+            <div class="section-title" id="tieu-de-bang-luu">Những Đơn Hàng Đã Lưu</div>
+            <div class="table-responsive">
+                <table id="main-data-table">
+                    <thead>
+                        <tr id="table-header-row"></tr>
+                    </thead>
+                    <tbody id="danh-sach-da-luu"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="section" id="khu-vuc-tao-lenh">
+            <div class="section-title">Nút Tạo Đơn Hàng Vận Chuyển (Lệnh xe không lưu)</div>
+            <div class="btn-container">
+                <button type="button" class="btn btn-blue" onclick="taoLenhDieuXe('an-khach')">Tạo đơn (Ẩn Khách Hàng)</button>
+                <button type="button" class="btn btn-blue" onclick="taoLenhDieuXe('an-all')">Tạo đơn (Ẩn Khách Hàng & Ẩn Số Tiền)</button>
+            </div>
+            <div class="output-flex" id="khu-vuc-lenh-xe"></div>
+        </div>
+    </div>
+
+    <script>
+        // Đã đồng bộ cấu hình dữ liệu Firebase tự động từ tài khoản của bạn
+        const firebaseConfig = {
+            apiKey: "AIzaSyCHHo-m42GTdwal7EToMtBI_iVi4qP5jaU",
+            authDomain: "truck-d14d8.firebaseapp.com",
+            databaseURL: "https://truck-d14d8-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "truck-d14d8",
+            storageBucket: "truck-d14d8.firebasestorage.app",
+            messagingSenderId: "132243863851",
+            appId: "1:132243863851:web:d90a82d8d9d4f4becb6d6e",
+            measurementId: "G-4M133G0YMD"
+        };
+        
+        // Khởi tạo Firebase kết nối Internet toàn cầu
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        const HETHONG_USER = {
+            "nguyen dang bau": "baubau1908",
+            "pham thi phuong": "phuongphuong0401",
+            "nguyen thanh vinh": "vinhvinh1409",
+            "nguyen thi duyen": "duyenduyen2505",
+            "bui xuan truong": "truongtruong6688",
+            "nguyen trung quyet": "quyetquyet7979",
+            "nguyen nhat hieu": "123123"
+        };
+
+        let TAI_KHOAN_HIEN_TAI = "";
+        let LA_ADMIN = false;
+        let KHO_DU_LIEU_INTERNET = {};
+
+        function handleLogin() {
+            const u = document.getElementById('username').value.trim().toLowerCase();
+            const p = document.getElementById('password').value;
+
+            if (HETHONG_USER[u] && HETHONG_USER[u] === p) {
+                TAI_KHOAN_HIEN_TAI = u;
+                LA_ADMIN = (u === "nguyen nhat hieu");
+                
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('main-app').style.display = 'block';
+                
+                const userBadge = document.getElementById('hien-thi-user');
+                if (LA_ADMIN) {
+                    userBadge.innerHTML = 'Tài khoản: <span class="admin-badge">ADMINISTRATOR</span>';
+                    document.getElementById('khu-vuc-form-sale').style.display = 'none';
+                    document.getElementById('tieu-de-bang-luu').innerText = "Tổng hợp toàn bộ đơn hàng hệ thống (Tất cả Sale)";
+                    document.getElementById('tieu-de-bang-luu').classList.add('admin-style');
+                } else {
+                    userBadge.innerText = "Nhân viên Sale: " + u.toUpperCase();
+                }
+                
+                khoiTaoBanDau();
+            } else {
+                document.getElementById('password').value = '';
+            }
+        }
+
+        function sinhMaVanDon() {
+            const soNgauNhien = Math.floor(Math.random() * 100000000) + 1;
+            document.getElementById('ma-van-don').value = "T-" + soNgauNhien;
+        }
+
+        function tinhToanCuocVAT() {
+            if (LA_ADMIN) return;
+            const chonVat = document.getElementById('vat').value;
+            const cuocKhach = parseFloat(document.getElementById('cuoc-khach').value) || 0;
+            const oCuocTongGroup = document.getElementById('group-cuoc-tong');
+            const oCuocTong = document.getElementById('cuoc-tong');
+
+            if (chonVat === 'Có') {
+                oCuocTongGroup.style.display = 'flex';
+                oCuocTong.value = (cuocKhach * 1.08).toLocaleString('vi-VN') + " VNĐ";
+            } else {
+                oCuocTongGroup.style.display = 'none';
+                oCuocTong.value = '';
+            }
+        }
+
+        function khoiTaoBanDau() {
+            if (!LA_ADMIN) sinhMaVanDon();
+            taoCauTrucHeaderBang();
+            
+            // ĐỒNG BỘ REALTIME QUA MẠNG CLOUD
+            database.ref('orders').on('value', (snapshot) => {
+                KHO_DU_LIEU_INTERNET = snapshot.val() || {};
+                hienThiDuLieuRaBang();
+            });
+        }
+
+        function lamMoiForm() {
+            if (LA_ADMIN) return;
+            document.getElementById('orderForm').reset();
+            sinhMaVanDon();
+            tinhToanCuocVAT();
+        }
+
+        function taoCauTrucHeaderBang() {
+            const headerRow = document.getElementById('table-header-row');
+            let baseHeaders = `<th>Mã vận đơn</th><th>Tên khách hàng</th><th>Số điện thoại</th><th>Tên hàng hoá</th><th>Điểm bốc</th><th>Điểm giao</th><th>Cước khách</th><th>VAT</th><th>Cước tổng</th>`;
+            if (LA_ADMIN) {
+                baseHeaders = `<th>Người lên đơn</th>` + baseHeaders + `<th>Hành động</th>`;
+            } else {
+                baseHeaders = baseHeaders + `<th>Đồng bộ hệ thống</th>`;
+            }
+            headerRow.innerHTML = baseHeaders;
+        }
+
+        function luuKhuVucKhachHang() {
+            if (LA_ADMIN) return;
+            const tenK = document.getElementById('ten-khach').value.trim();
+            const dt = document.getElementById('sdt').value.trim();
+
+            if (!tenK || !dt) {
+                alert('Vui lòng nhập Tên khách hàng và Số điện thoại trước khi lưu!');
+                return;
+            }
+
+            const giaTriCuoc = parseFloat(document.getElementById('cuoc-khach').value) || 0;
+            const coVat = document.getElementById('vat').value;
+            const idUnique = Date.now() + "_" + Math.random().toString(36).substr(2, 5);
+
+            const chiTietDon = {
+                idUnique: idUnique,
+                chuDon: TAI_KHOAN_HIEN_TAI,
+                maVanDon: document.getElementById('ma-van-don').value,
+                tenKhach: tenK,
+                sdt: dt,
+                tenHang: document.getElementById('ten-hang').value,
+                diemBoc: document.getElementById('diem-boc').value,
+                diemGiao: document.getElementById('diem-giao').value,
+                chiTietHang: document.getElementById('chi-tiet-hang').value,
+                trongLuong: document.getElementById('trong-luong').value,
+                khoiMet: document.getElementById('khoi-met').value,
+                yeuCauXe: document.getElementById('yeu-cau-xe').value,
+                timeBoc: document.getElementById('time-boc').value,
+                timeGiao: document.getElementById('time-giao').value,
+                cuocKhach: giaTriCuoc,
+                vat: coVat,
+                cuocTong: coVat === 'Có' ? giaTriCuoc * 1.08 : 0,
+                ghiChu: document.getElementById('ghi-chu').value,
+                daUpLenAdmin: false
+            };
+
+            database.ref('orders/' + idUnique).set(chiTietDon)
+            .then(() => alert('Đã lưu thông tin đơn hàng thành công!'))
+            .catch(() => alert('Lỗi đường truyền mạng, hãy kiểm tra lại kết nối.'));
+        }
+
+        function hienThiDuLieuRaBang() {
+            const tbody = document.getElementById('danh-sach-da-luu');
+            tbody.innerHTML = '';
+
+            Object.keys(KHO_DU_LIEU_INTERNET).forEach((key) => {
+                const don = KHO_DU_LIEU_INTERNET[key];
+                if (LA_ADMIN && !don.daUpLenAdmin) return; 
+                if (!LA_ADMIN && don.chuDon !== TAI_KHOAN_HIEN_TAI) return;
+
+                const row = document.createElement('tr');
+                let cotMaVD = `<td><a class="ma-vd-link" onclick="xemLaiChiTietDon('${don.idUnique}')"><b>${don.maVanDon}</b></a>${don.daUpLenAdmin && !LA_ADMIN ? '<span class="up-badge">Đã Up</span>':''}</td>`;
+                let noiDungRow = `<td>${don.tenKhach}</td><td>${don.sdt}</td><td>${don.tenHang}</td><td>${don.diemBoc}</td><td>${don.diemGiao}</td><td>${don.cuocKhach ? don.cuocKhach.toLocaleString('vi-VN') + ' đ' : '0'}</td><td>${don.vat}</td><td>${don.cuocTong ? don.cuocTong.toLocaleString('vi-VN') + ' đ' : 'Không'}</td>`;
+
+                if (LA_ADMIN) {
+                    row.innerHTML = `<td><b style="color:var(--admin-color); text-transform: uppercase;">${don.chuDon}</b></td>` + cotMaVD + noiDungRow + `<td><button class="btn-delete" onclick="adminXoaDon('${don.idUnique}')">Xóa đơn</button></td>`;
+                } else {
+                    let nutUpDon = don.daUpLenAdmin 
+                        ? `<td><button class="btn-orange" disabled>Đã up Admin</button></td>`
+                        : `<td><button class="btn-orange" onclick="upDonLenAdmin('${don.idUnique}')">Up đơn</button></td>`;
+                    row.innerHTML = cotMaVD + noiDungRow + nutUpDon;
+                }
+                tbody.appendChild(row);
+            });
+        }
+
+        function upDonLenAdmin(idUnique) {
+            if (confirm("Bạn và Khách hàng phải xác nhận lại thông tin trước khi Up đơn, bạn chắc chắn Up đơn?")) {
+                database.ref('orders/' + idUnique).update({ daUpLenAdmin: true });
+            }
+        }
+
+        function adminXoaDon(idUnique) {
+            if (confirm('CẢNH BÁO ADMIN: Bạn có chắc chắn muốn xóa vĩnh viễn đơn hàng này?')) {
+                database.ref('orders/' + idUnique).remove();
+            }
+        }
+
+        function xemLaiChiTietDon(idUnique) {
+            const don = KHO_DU_LIEU_INTERNET[idUnique];
+            if (!don) return;
+
+            let htmlRows = "";
+            function thuThapDong(tieuDe, giaTri) {
+                if (giaTri && giaTri !== "") return `<tr><td>${tieuDe}</td><td>${giaTri}</td></tr>`;
+                return "";
+            }
+
+            htmlRows += thuThapDong("Mã vận đơn", `<strong style="color:red;">${don.maVanDon}</strong>`);
+            htmlRows += thuThapDong("Tên khách hàng", don.tenKhach);
+            htmlRows += thuThapDong("Số điện thoại", don.sdt);
+            htmlRows += thuThapDong("Tên hàng hoá", don.tenHang);
+            htmlRows += thuThapDong("Điểm bốc hàng", don.diemBoc);
+            htmlRows += thuThapDong("Điểm giao hàng", don.diemGiao);
+            htmlRows += thuThapDong("Chi tiết hàng hoá", don.chiTietHang);
+            htmlRows += thuThapDong("Trọng lượng", don.trongLuong);
+            htmlRows += thuThapDong("Khối hoặc mét xe", don.khoiMet);
+            htmlRows += thuThapDong("Yêu cầu xe", `<strong>${don.yeuCauXe}</strong>`);
+            htmlRows += thuThapDong("Time bốc", don.timeBoc);
+            htmlRows += thuThapDong("Time giao", don.timeGiao);
+            if (don.cuocKhach > 0) htmlRows += `<tr><td>Cước khách</td><td>${don.cuocKhach.toLocaleString('vi-VN')} đ</td></tr>`;
+            htmlRows += `<tr><td>VAT</td><td>${don.vat}</td></tr>`;
+            if (don.vat === 'Có' && don.cuocKhach > 0) htmlRows += `<tr><td>Cước tổng</td><td><strong>${don.cuocTong.toLocaleString('vi-VN')} đ</strong></td></tr>`;
+            htmlRows += thuThapDong("Ghi chú", don.ghiChu);
+
+            document.getElementById('khu-vuc-lenh-xe').innerHTML = `<div class="vertical-table-card" style="border-color: #10b981;"><h3 style="color:#10b981; border-bottom-color:#d1fae5;">KIỂM TRA ĐƠN: ${don.maVanDon} (${don.chuDon.toUpperCase()})</h3><table class="v-table">${htmlRows}</table></div>`;
+            document.getElementById('khu-vuc-tao-lenh').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function taoLenhDieuXe(cheDo) {
+            const ma = document.getElementById('ma-van-don').value.trim();
+            const hang = document.getElementById('ten-hang').value.trim();
+            const boc = document.getElementById('diem-boc').value.trim();
+            const giao = document.getElementById('diem-giao').value.trim();
+            const chitiet = document.getElementById('chi-tiet-hang').value.trim();
+            const tluong = document.getElementById('trong-luong').value.trim();
+            const kmet = document.getElementById('khoi-met').value.trim();
+            const xe = document.getElementById('yeu-cau-xe').value.trim();
+            const tBoc = document.getElementById('time-boc').value.trim();
+            const tGiao = document.getElementById('time-giao').value.trim();
+            const giaCuoc = parseFloat(document.getElementById('cuoc-khach').value) || 0;
+            const coVat = document.getElementById('vat').value.trim();
+            const note = document.getElementById('ghi-chu').value.trim();
+
+            let htmlRows = "";
+            function thuThapDong(tieuDe, giaTri) {
+                if (giaTri && giaTri !== "") return `<tr><td>${tieuDe}</td><td>${giaTri}</td></tr>`;
+                return "";
+            }
+
+            htmlRows += thuThapDong("Mã vận đơn", ma ? `<strong style="color:red;">${ma}</strong>` : "");
+            htmlRows += thuThapDong("Tên hàng hoá", hang);
+            htmlRows += thuThapDong("Điểm bốc hàng", boc);
+            htmlRows += thuThapDong("Điểm giao hàng", giao);
+            htmlRows += thuThapDong("Chi tiết hàng hoá", chitiet);
+            htmlRows += thuThapDong("Trọng lượng", tluong);
+            htmlRows += thuThapDong("Khối hoặc mét xe", kmet);
+            htmlRows += thuThapDong("Yêu cầu xe", xe ? `<strong>${xe}</strong>` : "");
+            htmlRows += thuThapDong("Time bốc", tBoc);
+            htmlRows += thuThapDong("Time giao", tGiao);
+
+            if (cheDo === 'an-khach') {
+                if (giaCuoc > 0) htmlRows += `<tr><td>Cước khách</td><td>${giaCuoc.toLocaleString('vi-VN')} đ</td></tr>`;
+                htmlRows += `<tr><td>VAT</td><td>${coVat}</td></tr>`;
+                if (coVat === 'Có' && giaCuoc > 0) htmlRows += `<tr><td>Cước tổng</td><td><strong>${(giaCuoc * 1.08).toLocaleString('vi-VN')} đ</strong></td></tr>`;
+            } else if (cheDo === 'an-all') {
+                htmlRows += `<tr><td>VAT</td><td>${coVat}</td></tr>`;
+            }
+            htmlRows += thuThapDong("Ghi chú", note);
+
+            document.getElementById('khu-vuc-lenh-xe').insertAdjacentHTML('afterbegin', `<div class="vertical-table-card"><h3>THÔNG TIN ĐƠN HÀNG VẬN CHUYỂN</h3><table class="v-table">${htmlRows}</table></div>`);
+        }
+    </script>
+</body>
+</html>
