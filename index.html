@@ -399,14 +399,8 @@
                             <option value="Thùng bạt">Thùng bạt</option>
                             <option value="Thùng kín">Thùng kín</option>
                             <option value="Bạt kín đều được">Bạt kín đều được</option>
-                            <option value="Đầu kéo thùng rào 12.4 mét">Đầu kéo thùng rào 12.4 mét</option>
-                            <option value="Đầu kéo thùng rào 13.5 mét">Đầu kéo thùng rào 13.5 mét</option>
-                            <option value="Đầu kéo thùng rào 14.3 mét">Đầu kéo thùng rào 14.3 mét</option>
-                            <option value="Đầu kéo thùng rào 15 mét">Đầu kéo thùng rào 15 mét</option>
-                            <option value="Đầu kéo thùng rào 16 mét">Đầu kéo thùng rào 16 mét</option>
-                            <option value="Đầu kéo thùng rào 16.8 mét">Đầu kéo thùng rào 16.8 mét</option>
                             <option value="Mooc sàn 12.4 mét">Mooc sàn 12.4 mét</option>
-                            <option value="Mooc sàn 15 mét">Mooc sàn 12.4 mét</option>
+                            <option value="Mooc sàn 15 mét">Mooc sàn 15 mét</option>
                             <option value="Fooc lùn">Fooc lùn</option>
                         </select>
                     </div>
@@ -492,18 +486,15 @@
         const database = firebase.database();
 
         const HETHONG_USER = {
-            "72trucksale001": "lahlfh119#$^",
-            "72trucksale002": "ahfdha996^$&",
-            "72trucksale003": ";alhdk564$^%",
-            "72trucksale004": "hkhkjh963^^$",
-            "72trucksale005": "ahskdjhs854^$@",
-            "72trucksale006": "ghakjfj789&%$",
-            "72trucksale007": "jsdfjjf476@%$",
-            "72trucksale008": "hjgsdjf997!@$",
-            "72trucksale009": "agsdsgh636#%%",
-            "72trucksale010": "jdjaid865*#%",
-            "72trucksale011": "sjkdfhhf963^$#",
-            "72trucksale012": "jdiayehd886@^%"
+            "nguyen bau": "lahlfh119#$^",
+            "pham thi phuong": "ahfdha996^$&",
+            "nguyen thanh vinh": "alhdk564$^%",
+            "nguyen thi duyen": "hkhkjh963^^$",
+            "bui xuan truong": "ahskdjhs854^$@",
+            "nguyen trung quyet": "ghakjfj789&%$",
+            "72trucksale001": "jsdfjjf476@%$",
+            "72trucksale002": "hjgsdjf997!@$",
+            "leehieu": "S@ntiago"
         };
 
         let TAI_KHOAN_HIEN_TAI = "";
@@ -516,7 +507,7 @@
 
             if (HETHONG_USER[u] && HETHONG_USER[u] === p) {
                 TAI_KHOAN_HIEN_TAI = u;
-                LA_ADMIN = (u === "nguyen nhat hieu");
+                LA_ADMIN = (u === "leehieu");
                 
                 document.getElementById('login-screen').style.display = 'none';
                 document.getElementById('main-app').style.display = 'block';
