@@ -1,935 +1,208 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CÔNG TY TNHH VẬN TẢI VÀ THƯƠNG MẠI 72 TRUCK</title>
-<style>
-:root {
---primary: #1e3a8a;
---primary-hover: #1d4ed8;
---bg-body: #f8fafc;
---border: #cbd5e1;
---admin-color: #dc2626;
---success-color: #10b981;
-}
-
-body {
-font-family: Arial, sans-serif;
-background-color: var(--bg-body);
-margin: 0;
-padding: 0;
-color: #334155;
-}
-
-/* KHUNG ĐĂNG NHẬP */
-#login-screen {
-display: flex;
-justify-content: center;
-align-items: center;
-height: 100vh;
-background: linear-gradient(135deg, #1e3a8a, #0f172a);
-}
-
-.login-card {
-background: #ffffff;
-padding: 35px;
-border-radius: 10px;
-box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-width: 100%;
-max-width: 360px;
-text-align: center;
-}
-
-.login-card h2 {
-margin-bottom: 25px;
-color: var(--primary);
-font-size: 20px;
-font-weight: bold;
-}
-
-.login-card input {
-width: 100%;
-padding: 12px;
-margin-bottom: 15px;
-border: 1px solid var(--border);
-border-radius: 5px;
-box-sizing: border-box;
-font-size: 15px;
-}
-
-.login-card button {
-width: 100%;
-padding: 12px;
-background-color: var(--primary);
-color: white;
-border: none;
-border-radius: 5px;
-font-weight: bold;
-font-size: 16px;
-cursor: pointer;
-}
-
-/* GIAO DIỆN CHÍNH */
-#main-app {
-display: none;
-max-width: 100%;
-margin: 0 auto;
-padding: 20px;
-box-sizing: border-box;
-}
-
-header {
-text-align: center;
-margin-bottom: 30px;
-width: 100%;
-display: block;
-clear: both;
-}
-
-header h1 {
-color: var(--primary);
-font-size: 28px;
-margin: 0; padding: 0;
-text-transform: uppercase;
-letter-spacing: 0.5px;
-font-weight: 800;
-line-height: 1.4;
-word-wrap: break-word;
-}
-
-.user-info {
-font-size: 14px;
-color: #475569;
-margin-top: 10px;
-font-weight: bold;
-}
-
-.admin-badge {
-color: var(--admin-color);
-border: 1px solid var(--admin-color);
-padding: 2px 6px;
-border-radius: 4px;
-background: #fef2f2;
-}
-
-.section {
-background: #ffffff;
-border-radius: 8px;
-padding: 25px;
-margin-bottom: 25px;
-box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-}
-
-.section-title {
-font-size: 18px;
-font-weight: bold;
-color: var(--primary);
-border-left: 5px solid var(--primary);
-padding-left: 10px;
-margin-top: 0;
-margin-bottom: 20px;
-}
-
-.section-title.admin-style {
-color: var(--admin-color);
-border-left-color: var(--admin-color);
-}
-
-.section-title.success-style {
-color: var(--success-color);
-border-left-color: var(--success-color);
-}
-
-.grid-layout {
-display: grid;
-grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-gap: 15px;
-}
-
-.form-group {
-display: flex;
-flex-direction: column;
-}
-
-.form-group label {
-font-size: 13px;
-font-weight: bold;
-margin-bottom: 5px;
-color: #475569;
-}
-
-.form-group input, .form-group select, .form-group textarea {
-padding: 10px;
-border: 1px solid var(--border);
-border-radius: 4px;
-font-size: 14px;
-outline: none;
-box-sizing: border-box;
-}
-
-.no-arrows::-webkit-outer-spin-button,
-.no-arrows::-webkit-inner-spin-button {
--webkit-appearance: none;
-margin: 0;
-}
-.no-arrows {
--moz-appearance: textfield;
-}
-
-.btn-container {
-display: flex;
-gap: 10px;
-margin-top: 20px;
-flex-wrap: wrap;
-}
-
-.btn {
-padding: 10px 20px;
-border: none;
-border-radius: 4px;
-font-weight: bold;
-cursor: pointer;
-font-size: 14px;
-transition: background 0.2s;
-}
-
-.btn-green { background-color: #10b981; color: white; }
-.btn-green:hover { background-color: #059669; }
-.btn-blue { background-color: #2563eb; color: white; }
-.btn-blue:hover { background-color: #1d4ed8; }
-.btn-gray { background-color: #64748b; color: white; }
-.btn-gray:hover { background-color: #475569; }
-
-.btn-action {
-padding: 4px 8px;
-font-size: 11px;
-border: none;
-border-radius: 3px;
-cursor: pointer;
-font-weight: bold;
-color: white;
-margin-right: 3px;
-margin-bottom: 2px;
-}
-.btn-orange { background-color: #f97316; }
-.btn-orange:hover { background-color: #ea580c; }
-.btn-orange:disabled { background-color: #cbd5e1; color: #94a3b8; cursor: not-allowed; }
-.btn-danger { background-color: #ef4444; }
-.btn-danger:hover { background-color: #dc2626; }
-.btn-success { background-color: #10b981; }
-.btn-success:hover { background-color: #059669; }
-.btn-navy { background-color: #1e3a8a; }
-.btn-navy:hover { background-color: #1d4ed8; }
-
-/* BẢNG DỮ LIỆU */
-.table-responsive {
-width: 100%;
-overflow-x: auto;
-}
-
-table {
-width: 100%;
-border-collapse: collapse;
-font-size: 13px;
-text-align: left;
-white-space: nowrap;
-}
-
-th, td {
-padding: 10px 12px;
-border: 1px solid var(--border);
-}
-
-th {
-background-color: #f1f5f9;
-color: #1e293b;
-font-weight: bold;
-}
-
-tr.total-row {
-background-color: #fef08a !important;
-font-weight: bold;
-color: #0f172a;
-}
-
-/* Hiển thị màu sắc dòng trạng thái */
-tr.status-rejected { background-color: #f1f5f9 !important; } 
-tr.status-approved { background-color: #fee2e2 !important; } 
-tr.status-shipping { background-color: #eff6ff !important; } 
-
-.ma-vd-link {
-color: #2563eb;
-text-decoration: none;
-font-weight: bold;
-cursor: pointer;
-}
-.ma-vd-link:hover {
-text-decoration: underline;
-}
-
-.admin-input {
-width: 110px;
-padding: 5px;
-border: 1px solid var(--border);
-border-radius: 3px;
-font-size: 13px;
-}
-
-.output-flex {
-display: flex;
-gap: 20px;
-flex-wrap: wrap;
-margin-top: 15px;
-}
-
-.vertical-table-card {
-background: #fff;
-border: 2px solid var(--primary);
-border-radius: 6px;
-padding: 15px;
-flex: 1;
-min-width: 300px;
-box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-}
-
-.vertical-table-card h3 {
-margin-top: 0;
-font-size: 15px;
-color: var(--primary);
-border-bottom: 2px solid #e2e8f0;
-padding-bottom: 8px;
-text-transform: uppercase;
-}
-
-.v-table {
-width: 100%;
-}
-
-.v-table td {
-padding: 8px;
-border: 1px solid #e2e8f0;
-}
-
-.v-table td:first-child {
-font-weight: bold;
-background-color: #f8fafc;
-width: 40%;
-}
-
-.status-badge {
-font-size: 11px;
-padding: 2px 5px;
-border-radius: 3px;
-margin-left: 5px;
-display: inline-block;
-font-weight: bold;
-}
-.badge-pending { background: #fef3c7; color: #d97706; }
-.badge-uploaded { background: #e0f2fe; color: #0369a1; }
-.badge-rejected { background: #cbd5e1; color: #475569; }
-.badge-approved { background: #fee2e2; color: #b91c1c; }
-.badge-shipping { background: #dbeafe; color: #1d4ed8; }
-</style>
-
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <meta charset="UTF-8">
+    <title>Hệ Thống Chấm Công 72TRUCK</title>
+    <style>
+        :root { --primary: #2c3e50; --success: #27ae60; --danger: #e74c3c; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f4f7f6; padding: 20px; }
+        .container { max-width: 1000px; margin: auto; background: white; padding: 25px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        h2 { color: var(--primary); text-align: center; }
+        input { width: 100%; padding: 8px; margin: 5px 0; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
+        .btn { padding: 10px 20px; border: none; border-radius: 4px; color: white; cursor: pointer; font-weight: bold; margin: 5px; }
+        .btn-in { background: var(--success); }
+        .btn-out { background: var(--danger); }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
+        th { background: var(--primary); color: white; }
+        .img-preview { width: 60px; height: 60px; object-fit: cover; border-radius: 4px; cursor: pointer; }
+        .popup { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: none; align-items: center; justify-content: center; }
+        .popup-content { background: white; padding: 20px; border-radius: 10px; width: 90%; max-height: 80vh; overflow-y: auto; }
+        .full-img { max-width: 100%; height: auto; }
+    </style>
 </head>
 <body>
 
-<div id="login-screen">
-<div class="login-card">
-<h2>CÔNG TY TNHH VẬN TẢI VÀ THƯƠNG MẠI 72 TRUCK</h2>
-<input type="text" id="username" placeholder="Tên đăng nhập" autocomplete="off">
-<input type="password" id="password" placeholder="Mật khẩu" autocomplete="off">
-<button onclick="handleLogin()">Đăng nhập</button>
-</div>
+<div class="container" id="loginArea">
+    <h2>ĐĂNG NHẬP HỆ THỐNG</h2>
+    <input type="text" id="username" placeholder="Tên đăng nhập">
+    <input type="password" id="password" placeholder="Mật khẩu">
+    <button class="btn btn-in" style="width:100%" onclick="login()">ĐĂNG NHẬP</button>
 </div>
 
-<div id="main-app">
-<header>
-<h1>CÔNG TY TNHH VẬN TẢI VÀ THƯƠNG MẠI 72 TRUCK</h1>
-<div class="user-info" id="hien-thi-user">Tài khoản: </div>
-</header>
-
-<div class="section" id="khu-vuc-form-sale">
-<div class="section-title" id="form-title">Form Nhập Liệu Đơn Hàng</div>
-<form id="orderForm">
-<input type="hidden" id="edit-id-unique">
-<div class="grid-layout">
-<div class="form-group">
-<label>Mã vận đơn</label>
-<input type="text" id="ma-van-don" readonly style="background-color: #e2e8f0; font-weight: bold; color: #0f172a;">
-</div>
-<div class="form-group">
-<label>Tên khách hàng</label>
-<input type="text" id="ten-khach" required>
-</div>
-<div class="form-group">
-<label>Số điện thoại</label>
-<input type="text" id="sdt" required>
-</div>
-<div class="form-group">
-<label>Tên hàng hoá</label>
-<input type="text" id="ten-hang">
-</div>
-<div class="form-group">
-<label>Điểm bốc hàng</label>
-<input type="text" id="diem-boc">
-</div>
-<div class="form-group">
-<label>Điểm giao hàng</label>
-<input type="text" id="diem-giao">
-</div>
-<div class="form-group">
-<label>Chi tiết hàng hoá</label>
-<input type="text" id="chi-tiet-hang">
-</div>
-<div class="form-group">
-<label>Trọng lượng</label>
-<input type="text" id="trong-luong">
-</div>
-<div class="form-group">
-<label>Khối hoặc mét xe</label>
-<input type="text" id="khoi-met">
-</div>
-<div class="form-group">
-<label>Yêu cầu xe</label>
-<select id="yeu-cau-xe">
-<option value="Thùng bạt">Thùng bạt</option>
-<option value="Thùng kín">Thùng kín</option>
-<option value="Bạt kín đều được">Bạt kín đều được</option>
-                            <option value="Đầu kéo thùng rào 12.4 mét">Đầu kéo thùng rào 12.4 mét</option>
-                            <option value="Đầu kéo thùng rào 13.5 mét">Đầu kéo thùng rào 13.5 mét</option>
-                            <option value="Đầu kéo thùng rào 14.3 mét">Đầu kéo thùng rào 14.3 mét</option>
-                            <option value="Đầu kéo thùng rào 15 mét">Đầu kéo thùng rào 15 mét</option>
-                            <option value="Đầu kéo thùng rào 16 mét">Đầu kéo thùng rào 16 mét</option>
-                            <option value="Đầu kéo thùng rào 16.8 mét">Đầu kéo thùng rào 16.8 mét</option>
-<option value="Mooc sàn 12.4 mét">Mooc sàn 12.4 mét</option>
-                            <option value="Mooc sàn 15 mét">Mooc sàn 12.4 mét</option>
-                            <option value="Mooc sàn 15 mét">Mooc sàn 15 mét</option>
-<option value="Fooc lùn">Fooc lùn</option>
-</select>
-</div>
-<div class="form-group">
-<label>Time bốc</label>
-<input type="text" id="time-boc">
-</div>
-<div class="form-group">
-<label>Time giao</label>
-<input type="text" id="time-giao">
-</div>
-<div class="form-group">
-<label>Cước khách</label>
-<input type="number" id="cuoc-khach" class="no-arrows" oninput="tinhToanCuocVAT()">
-</div>
-<div class="form-group">
-<label>VAT</label>
-<select id="vat" onchange="tinhToanCuocVAT()">
-<option value="Không">Không</option>
-<option value="Có">Có</option>
-</select>
-</div>
-<div class="form-group" id="group-cuoc-tong" style="display: none;">
-<label>Cước tổng (Gồm VAT)</label>
-<input type="text" id="cuoc-tong" readonly style="background-color: #fef08a; font-weight: bold; color: #b45309;">
-</div>
-<div class="form-group" style="grid-column: span 1;">
-<label>Ghi chú</label>
-<textarea id="ghi-chu" rows="1"></textarea>
-</div>
+<div class="container" id="appArea" style="display:none;">
+    <h2 id="welcome"></h2>
+    <div id="userActions">
+        <button class="btn btn-in" id="inBtn" onclick="checkIn()">CHECK IN</button>
+        <div id="outPanel" style="margin: 20px 0; border-top: 1px solid #eee; padding-top: 10px;">
+            <label>Ảnh thực tế:</label> <input type="file" id="zaloImg" accept="image/*">
+            <label>Link Facebook:</label> <input type="text" id="fbLink" placeholder="https://...">
+            <button class="btn btn-out" onclick="checkOut()">CHECK OUT</button>
+        </div>
+    </div>
+    <div id="displayArea"></div>
 </div>
 
-<div class="btn-container">
-<button type="button" class="btn btn-gray" id="btn-huy-sua" onclick="lamMoiForm()" style="display:none;">Hủy sửa</button>
-<button type="button" class="btn btn-gray" id="btn-lam-moi" onclick="lamMoiForm()">Làm mới đơn hàng</button>
-<button type="button" class="btn btn-green" id="btn-luu-don" onclick="luuKhuVucKhachHang()">Lưu thông tin khách hàng</button>
-</div>
-</form>
-</div>
-
-<div class="section" id="khu-vuc-danh-sach">
-<div class="section-title" id="tieu-de-bang-luu">Những Đơn Hàng Đang Xử Lý</div>
-<div class="table-responsive">
-<table id="main-data-table">
-<thead>
-<tr id="table-header-row"></tr>
-</thead>
-<tbody id="danh-sach-da-luu"></tbody>
-</table>
-</div>
+<div id="adminPopup" class="popup" onclick="this.style.display='none'">
+    <div class="popup-content" onclick="event.stopPropagation()">
+        <button onclick="document.getElementById('adminPopup').style.display='none'">ĐÓNG</button>
+        <div id="popupContent"></div>
+    </div>
 </div>
 
-<div class="section" id="khu-vuc-doanh-so">
-<div class="section-title success-style" id="tieu-de-doanh-so">Doanh Số Hoàn Thành</div>
-<div class="table-responsive">
-<table id="done-data-table">
-<thead>
-<tr id="done-header-row"></tr>
-</thead>
-<tbody id="danh-sach-doanh-so"></tbody>
-</table>
-</div>
-</div>
-
-<div class="section" id="khu-vuc-tao-lenh" style="border: none; padding: 0; box-shadow: none; background: transparent;">
-<div class="output-flex" id="khu-vuc-lenh-xe"></div>
-</div>
+<div id="imgPopup" class="popup" onclick="this.style.display='none'">
+    <div class="popup-content" style="text-align:center">
+        <img id="bigImg" class="full-img" src="">
+    </div>
 </div>
 
 <script>
-const firebaseConfig = {
-apiKey: "AIzaSyCHHo-m42GTdwal7EToMtBI_iVi4qP5jaU",
-authDomain: "truck-d14d8.firebaseapp.com",
-databaseURL: "https://truck-d14d8-default-rtdb.asia-southeast1.firebasedatabase.app",
-projectId: "truck-d14d8",
-storageBucket: "truck-d14d8.firebasestorage.app",
-messagingSenderId: "132243863851",
-appId: "1:132243863851:web:d90a82d8d9d4f4becb6d6e",
-measurementId: "G-4M133G0YMD"
-};
+    const users = {
+        "admin": { pass: "lontoso0", name: "Nguyễn Nhật Hiếu", role: "admin" },
+        "nguyen dang bau": { pass: "72baubau1908", name: "Nguyễn Đăng Báu", role: "user" },
+        "pham thi phuong": { pass: "72phuongphuong0401", name: "Phạm Thị Phương", role: "user" },
+        "nguyen thanh vinh": { pass: "72vinhvinh1409", name: "Nguyễn Thành Vinh", role: "user" },
+        "nguyen thi duyen": { pass: "72duyenduyen2505", name: "Nguyễn Thị Duyên", role: "user" },
+        "bui xuan truong": { pass: "72truongtruong6688", name: "Bùi Xuân Trường", role: "user" },
+        "kt72truck": { pass: "72truckkt", name: "Lê Thị Ngân", role: "user" },
+        "nv001": { pass: "72trucknv1", name: "nv001", role: "user" },
+        "nv002": { pass: "72trucknv2", name: "nv002", role: "user" },
+        "dv001": { pass: "72truck1", name: "Nguyễn Thị Soa", role: "user" },
+        "dv002": { pass: "72truck2", name: "Nguyễn Thành Trinh", role: "user" }
+    };
 
-firebase.initializeApp(firebaseConfig);
-const database = firebase.database();
+    let data = JSON.parse(localStorage.getItem('attendanceData')) || [];
+    let currentUser = null;
 
-const HETHONG_USER = {
-            "72trucksale001": "lahlfh119#$^",
-            "72trucksale002": "ahfdha996^$&",
-            "72trucksale003": ";alhdk564$^%",
-            "72trucksale004": "hkhkjh963^^$",
-            "72trucksale005": "ahskdjhs854^$@",
-            "72trucksale006": "ghakjfj789&%$",
-            "72trucksale007": "jsdfjjf476@%$",
-            "72trucksale008": "hjgsdjf997!@$",
-            "72trucksale009": "agsdsgh636#%%",
-            "72trucksale010": "jdjaid865*#%",
-            "72trucksale011": "sjkdfhhf963^$#",
-            "72trucksale012": "jdiayehd886@^%"
-            "nguyen bau": "lahlfh119#$^",
-            "pham thi phuong": "ahfdha996^$&",
-            "nguyen thanh vinh": "alhdk564$^%",
-            "nguyen thi duyen": "hkhkjh963^^$",
-            "bui xuan truong": "ahskdjhs854^$@",
-            "nguyen trung quyet": "ghakjfj789&%$",
-            "72trucksale001": "jsdfjjf476@%$",
-            "72trucksale002": "hjgsdjf997!@$",
-            "leehieu": "S@ntiago"
-};
+    function timeToMinutes(t) {
+        const [h, m] = t.split(':').map(Number);
+        return h * 60 + m;
+    }
 
-let TAI_KHOAN_HIEN_TAI = "";
-let LA_ADMIN = false;
-let KHO_DU_LIEU_INTERNET = {};
+    function calculateScore(inTime, outTime) {
+        if (!inTime || !outTime) return 0;
+        const inM = timeToMinutes(inTime);
+        const outM = timeToMinutes(outTime);
 
-function handleLogin() {
-const u = document.getElementById('username').value.trim().toLowerCase();
-const p = document.getElementById('password').value;
+        // Các mốc thời gian quy định
+        const sangStart = timeToMinutes("08:00");
+        const sangEnd = timeToMinutes("12:00");
+        const chieuStart = timeToMinutes("13:30");
+        const chieuEnd = timeToMinutes("17:30");
 
-if (HETHONG_USER[u] && HETHONG_USER[u] === p) {
-TAI_KHOAN_HIEN_TAI = u;
-                LA_ADMIN = (u === "nguyen nhat hieu");
-                LA_ADMIN = (u === "leehieu");
+        // Tính thời gian thực làm trong ca sáng
+        const actualStartSang = Math.max(inM, sangStart);
+        const actualEndSang = Math.min(outM, sangEnd);
+        const workSang = Math.max(0, actualEndSang - actualStartSang);
 
-document.getElementById('login-screen').style.display = 'none';
-document.getElementById('main-app').style.display = 'block';
+        // Tính thời gian thực làm trong ca chiều
+        const actualStartChieu = Math.max(inM, chieuStart);
+        const actualEndChieu = Math.min(outM, chieuEnd);
+        const workChieu = Math.max(0, actualEndChieu - actualStartChieu);
 
-const userBadge = document.getElementById('hien-thi-user');
-if (LA_ADMIN) {
-userBadge.innerHTML = 'Tài khoản: <span class="admin-badge">ADMINISTRATOR</span>';
-document.getElementById('khu-vuc-form-sale').style.display = 'block'; 
-document.getElementById('form-title').innerText = "Form Xem / Chỉnh Sửa Đơn Hệ Thống (Dành Cho Admin)";
-document.getElementById('tieu-de-bang-luu').innerText = "Bảng Điều Phối Đơn Hàng Đang Chạy";
-document.getElementById('tieu-de-bang-luu').classList.add('admin-style');
-document.getElementById('tieu-de-doanh-so').innerText = "Tổng Hợp Toàn Bộ Doanh Số Hoàn Thành (Tất Cả Sale)";
-} else {
-userBadge.innerText = "Nhân viên Sale: " + u.toUpperCase();
-document.getElementById('khu-vuc-form-sale').style.display = 'block';
-document.getElementById('form-title').innerText = "Form Nhập Liệu Đơn Hàng";
-document.getElementById('tieu-de-doanh-so').innerText = "Doanh Số Hoàn Thành Của Bạn";
-}
+        const totalWorkMinutes = workSang + workChieu;
+        
+        // Công thức: công = 1 - ((480 - phút làm) / 480) 
+        // Rút gọn thành: phút làm / 480
+        const score = totalWorkMinutes / 480;
+        return Math.max(0, parseFloat(score.toFixed(2)));
+    }
 
-khoiTaoBanDau();
-} else {
-document.getElementById('password').value = '';
-}
-}
+    function login() {
+        const u = document.getElementById('username').value.toLowerCase();
+        const p = document.getElementById('password').value;
+        if(users[u] && users[u].pass === p) {
+            currentUser = { username: u, ...users[u] };
+            document.getElementById('loginArea').style.display = 'none';
+            document.getElementById('appArea').style.display = 'block';
+            document.getElementById('welcome').innerText = "Chào, " + currentUser.name;
+            if(currentUser.role === 'admin') document.getElementById('userActions').style.display = 'none';
+            renderMain();
+        } else alert("Thông tin không chính xác!");
+    }
 
-function sinhMaVanDon() {
-if (LA_ADMIN) return;
-const soNgauNhien = Math.floor(Math.random() * 100000000) + 1;
-document.getElementById('ma-van-don').value = "T-" + soNgauNhien;
-}
+    function checkIn() {
+        const now = new Date();
+        const date = now.toLocaleDateString();
+        if(data.find(i => i.user === currentUser.name && i.date === date)) return alert("Đã check-in hôm nay!");
+        data.push({ id: Date.now(), user: currentUser.name, date, in: now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}), out: '', img: '', fb: '', score: 0 });
+        localStorage.setItem('attendanceData', JSON.stringify(data));
+        renderMain();
+    }
 
-function tinhToanCuocVAT() {
-const chonVat = document.getElementById('vat').value;
-const cuocKhach = parseFloat(document.getElementById('cuoc-khach').value) || 0;
-const oCuocTongGroup = document.getElementById('group-cuoc-tong');
-const oCuocTong = document.getElementById('cuoc-tong');
+    function checkOut() {
+        const date = new Date().toLocaleDateString();
+        const rec = data.find(i => i.user === currentUser.name && i.date === date && i.out === '');
+        if(!rec) return alert("Chưa check-in hoặc đã check-out!");
+        
+        const file = document.getElementById('zaloImg').files[0];
+        const fb = document.getElementById('fbLink').value;
+        if(!file || !fb) return alert("Cần chọn ảnh và nhập link Facebook!");
+        
+        const reader = new FileReader();
+        reader.onload = e => {
+            rec.out = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+            rec.img = e.target.result;
+            rec.fb = fb;
+            rec.score = calculateScore(rec.in, rec.out);
+            localStorage.setItem('attendanceData', JSON.stringify(data));
+            renderMain();
+        };
+        reader.readAsDataURL(file);
+    }
 
-if (chonVat === 'Có') {
-oCuocTongGroup.style.display = 'flex';
-oCuocTong.value = (cuocKhach * 1.08).toLocaleString('vi-VN') + " VNĐ";
-} else {
-oCuocTongGroup.style.display = 'none';
-oCuocTong.value = '';
-}
-}
+    function renderMain() {
+        if(currentUser.role === 'admin') {
+            let html = "<h3>Danh sách nhân viên:</h3>";
+            Object.values(users).forEach(u => { if(u.role==='user') html += `<button class="btn" style="background:#3498db" onclick="openAdminPanel('${u.name}')">${u.name}</button>`; });
+            document.getElementById('displayArea').innerHTML = html;
+        } else {
+            document.getElementById('displayArea').innerHTML = generateTable(currentUser.name);
+        }
+    }
 
-function khoiTaoBanDau() {
-sinhMaVanDon();
-taoCauTrucHeaderBang();
+    function generateTable(userName) {
+        let html = `<h3>Bảng công: ${userName}</h3><table><tr><th>Ngày</th><th>Vào</th><th>Ra</th><th>Ảnh</th><th>Link FB</th><th>Số Công</th>${currentUser.role==='admin' ? '<th>Thao tác</th>' : ''}</tr>`;
+        data.filter(i => i.user === userName).forEach(i => {
+            html += `<tr><td>${i.date}</td>
+                    <td>${currentUser.role==='admin' ? `<input type="text" value="${i.in}" onchange="updateRow(${i.id}, 'in', this.value)">` : i.in}</td>
+                    <td>${currentUser.role==='admin' ? `<input type="text" value="${i.out}" onchange="updateRow(${i.id}, 'out', this.value)">` : i.out}</td>
+                    <td>${i.img ? `<img src="${i.img}" class="img-preview" onclick="showImg('${i.img}')">` : ''}</td>
+                    <td>${i.fb ? `<a href="${i.fb}" target="_blank">Xem Link</a>` : ''}</td>
+                    <td>${i.score}</td>
+                    ${currentUser.role==='admin' ? `<td><button onclick="deleteRow(${i.id})">Xóa</button></td>` : ''}</tr>`;
+        });
+        return html + "</table>";
+    }
 
-database.ref('orders').on('value', (snapshot) => {
-KHO_DU_LIEU_INTERNET = snapshot.val() || {};
-hienThiDuLieuRaBang();
-});
-}
+    function updateRow(id, key, val) {
+        let rec = data.find(i => i.id === id);
+        if(rec) { 
+            rec[key] = val; 
+            rec.score = calculateScore(rec.in, rec.out);
+            localStorage.setItem('attendanceData', JSON.stringify(data));
+            if(currentUser.role === 'admin') openAdminPanel();
+        }
+    }
 
-function lamMoiForm() {
-document.getElementById('orderForm').reset();
-document.getElementById('edit-id-unique').value = '';
-if (LA_ADMIN) {
-document.getElementById('form-title').innerText = "Form Xem / Chỉnh Sửa Đơn Hệ Thống (Dành Cho Admin)";
-document.getElementById('btn-luu-don').innerText = "Admin Lưu cập nhật đơn";
-} else {
-document.getElementById('form-title').innerText = "Form Nhập Liệu Đơn Hàng";
-document.getElementById('btn-luu-don').innerText = "Lưu thông tin khách hàng";
-}
-document.getElementById('btn-huy-sua').style.display = "none";
-document.getElementById('btn-lam-moi').style.display = "inline-block";
-sinhMaVanDon();
-tinhToanCuocVAT();
-}
+    function deleteRow(id) {
+        if(confirm("Xóa bản ghi này?")) {
+            data = data.filter(i => i.id !== id);
+            localStorage.setItem('attendanceData', JSON.stringify(data));
+            openAdminPanel();
+        }
+    }
 
-function taoCauTrucHeaderBang() {
-const fieldsAdminRunning = `
-               <th>Mã vận đơn</th><th>Tên Sale</th><th>Tên khách hàng</th><th>Số điện thoại</th><th>Tên hàng hoá</th>
-               <th>Điểm bốc</th><th>Điểm giao</th><th>Cước khách hàng</th><th>Cước xe (Điều vận điền)</th>
-               <th>Lợi nhuận</th><th>% Lợi nhuận</th><th>BKS</th><th>Tên lái xe</th><th>SĐT lái xe</th><th>Hành động</th>`;
+    function openAdminPanel(name) {
+        if(name) window.currentAdminView = name;
+        document.getElementById('popupContent').innerHTML = generateTable(window.currentAdminView);
+        document.getElementById('adminPopup').style.display = 'flex';
+    }
 
-const fieldsAdminDone = `
-               <th>Mã vận đơn</th><th>Tên Sale</th><th>Tên khách hàng</th><th>Số điện thoại</th><th>Tên hàng hoá</th>
-               <th>Điểm bốc</th><th>Điểm giao</th><th>Cước khách hàng</th><th>Cước xe</th>
-               <th>Lợi nhuận</th><th>% Lợi nhuận</th><th>BKS</th><th>Tên lái xe</th><th>SĐT lái xe</th>`;
-
-const fieldsSale = `
-               <th>Mã vận đơn</th><th>Tên khách hàng</th><th>Số điện thoại</th><th>Tên hàng hoá</th>
-               <th>Điểm bốc</th><th>Điểm giao</th><th>Cước khách</th><th>VAT</th><th>Cước tổng</th><th>Trạng thái / Đồng bộ</th>`;
-
-document.getElementById('table-header-row').innerHTML = LA_ADMIN ? fieldsAdminRunning : fieldsSale;
-document.getElementById('done-header-row').innerHTML = LA_ADMIN ? fieldsAdminDone : fieldsSale;
-}
-
-function luuKhuVucKhachHang() {
-const tenK = document.getElementById('ten-khach').value.trim();
-const dt = document.getElementById('sdt').value.trim();
-
-if (!tenK || !dt) {
-alert('Vui lòng nhập Tên khách hàng và Số điện thoại trước khi lưu!');
-return;
-}
-
-const giaTriCuoc = parseFloat(document.getElementById('cuoc-khach').value) || 0;
-const coVat = document.getElementById('vat').value;
-const isEdit = document.getElementById('edit-id-unique').value;
-
-if (LA_ADMIN && !isEdit) {
-alert('Tài khoản Admin không tự tạo đơn mới, vui lòng bấm nút "Sửa" dưới danh sách đơn của Sale để chỉnh sửa dữ liệu!');
-return;
-}
-
-const idUnique = isEdit || (Date.now() + "_" + Math.random().toString(36).substr(2, 5));
-
-const chiTietDon = {
-idUnique: idUnique,
-chuDon: isEdit ? (KHO_DU_LIEU_INTERNET[idUnique]?.chuDon || TAI_KHOAN_HIEN_TAI) : TAI_KHOAN_HIEN_TAI,
-maVanDon: document.getElementById('ma-van-don').value,
-tenKhach: tenK,
-sdt: dt,
-tenHang: document.getElementById('ten-hang').value,
-diemBoc: document.getElementById('diem-boc').value,
-diemGiao: document.getElementById('diem-giao').value,
-chiTietHang: document.getElementById('chi-tiet-hang').value,
-trongLuong: document.getElementById('trong-luong').value,
-khoiMet: document.getElementById('khoi-met').value,
-yeuCauXe: document.getElementById('yeu-cau-xe').value,
-timeBoc: document.getElementById('time-boc').value,
-timeGiao: document.getElementById('time-giao').value,
-cuocKhach: giaTriCuoc,
-vat: coVat,
-cuocTong: coVat === 'Có' ? giaTriCuoc * 1.08 : 0,
-ghiChu: document.getElementById('ghi-chu').value,
-daUpLenAdmin: isEdit ? (KHO_DU_LIEU_INTERNET[idUnique]?.daUpLenAdmin || false) : false,
-trangThaiDon: isEdit ? (KHO_DU_LIEU_INTERNET[idUnique]?.trangThaiDon || "Mới tạo") : "Mới tạo", 
-cuocXe: isEdit ? (KHO_DU_LIEU_INTERNET[idUnique]?.cuocXe || 0) : 0,
-bks: isEdit ? (KHO_DU_LIEU_INTERNET[idUnique]?.bks || "") : "",
-tenLaiXe: isEdit ? (KHO_DU_LIEU_INTERNET[idUnique]?.tenLaiXe || "") : "",
-sdtLaiXe: isEdit ? (KHO_DU_LIEU_INTERNET[idUnique]?.sdtLaiXe || "") : ""
-};
-
-database.ref('orders/' + idUnique).set(chiTietDon)
-.then(() => {
-alert('Đã lưu dữ liệu lên hệ thống đám mây thành công!');
-lamMoiForm();
-})
-.catch(() => alert('Lỗi đường truyền Internet.'));
-}
-
-function hienThiDuLieuRaBang() {
-const tbodyRunning = document.getElementById('danh-sach-da-luu');
-const tbodyDone = document.getElementById('danh-sach-doanh-so');
-tbodyRunning.innerHTML = '';
-tbodyDone.innerHTML = '';
-
-let runCK = 0, runCX = 0, runLN = 0, runPCT = [];
-let doneCK = 0, doneCX = 0, doneLN = 0, donePCT = [];
-
-Object.keys(KHO_DU_LIEU_INTERNET).forEach((key) => {
-const don = KHO_DU_LIEU_INTERNET[key];
-if (LA_ADMIN && don.trangThaiDon === "Mới tạo") return; 
-if (!LA_ADMIN && don.chuDon !== TAI_KHOAN_HIEN_TAI) return;
-
-const row = document.createElement('tr');
-const cKhach = parseFloat(don.cuocKhach) || 0;
-const cXe = parseFloat(don.cuocXe) || 0;
-const loiNhuan = cKhach - cXe;
-const phanTram = cKhach > 0 ? (loiNhuan / cKhach) * 100 : 0;
-
-if (LA_ADMIN) {
-if (don.trangThaiDon === "Hoàn thành") {
-doneCK += cKhach; doneCX += cXe; doneLN += loiNhuan; donePCT.push(phanTram);
-} else {
-runCK += cKhach; runCX += cXe; runLN += loiNhuan; runPCT.push(phanTram);
-}
-
-if (don.trangThaiDon === "Bị trả lại") row.className = 'status-rejected';
-if (don.trangThaiDon === "Điều vận bố trí xe") row.className = 'status-approved';
-if (don.trangThaiDon === "Đang vận chuyển") row.className = 'status-shipping';
-
-if (don.trangThaiDon === "Hoàn thành") {
-row.innerHTML = `
-                           <td><b>${don.maVanDon}</b></td>
-                           <td><b style="color:var(--primary); text-transform:uppercase;">${don.chuDon}</b></td>
-                           <td>${don.tenKhach}</td><td>${don.sdt}</td><td>${don.tenHang}</td><td>${don.diemBoc}</td><td>${don.diemGiao}</td>
-                           <td><b>${cKhach.toLocaleString('vi-VN')} đ</b></td><td><b>${cXe.toLocaleString('vi-VN')} đ</b></td>
-                           <td style="color: ${loiNhuan >= 0 ? 'green' : 'red'}; font-weight: bold;">${loiNhuan.toLocaleString('vi-VN')} đ</td>
-                           <td>${phanTram.toFixed(1)}%</td><td>${don.bks || ''}</td><td>${don.tenLaiXe || ''}</td><td>${don.sdtLaiXe || ''}</td>
-                       `;
-} else {
-let cotHanhDong = `
-                           <td>
-                               <button class="btn-action btn-danger" style="background:#cbd5e1; color:#334155;" onclick="chuyenTrangThaiDon('${don.idUnique}', 'Bị trả lại')">Trả lại đơn</button>
-                               <button class="btn-action btn-danger" onclick="chuyenTrangThaiDon('${don.idUnique}', 'Điều vận bố trí xe')">Duyệt đơn</button>
-                               <button class="btn-action btn-blue" onclick="chuyenTrangThaiDon('${don.idUnique}', 'Đang vận chuyển')">Đang vận chuyển</button>
-                               <button class="btn-action btn-success" onclick="chuyenTrangThaiDon('${don.idUnique}', 'Hoàn thành')">Hoàn thành</button>
-                               <button class="btn-action btn-blue" style="background:#4f46e5;" onclick="kichHoatSuaDon('${don.idUnique}')">Sửa đơn</button>
-                               <button class="btn-action" style="background:#475569;" onclick="huyChuyenDon('${don.idUnique}')">Hủy chuyến</button>
-                           </td>`;
-
-row.innerHTML = `
-                           <td><b>${don.maVanDon}</b></td>
-                           <td><b style="color:var(--primary); text-transform:uppercase;">${don.chuDon}</b></td>
-                           <td>${don.tenKhach}</td><td>${don.sdt}</td><td>${don.tenHang}</td><td>${don.diemBoc}</td><td>${don.diemGiao}</td>
-                           <td><b>${cKhach.toLocaleString('vi-VN')} đ</b></td>
-                           <td>
-                               <input type="number" class="admin-input no-arrows" value="${don.cuocXe || ''}" placeholder="Cước xe..." onchange="updateTruongAdmin('${don.idUnique}', 'cuocXe', this.value)">
-                           </td>
-                           <td style="color: ${loiNhuan >= 0 ? 'green' : 'red'}; font-weight: bold;">${loiNhuan.toLocaleString('vi-VN')} đ</td>
-                           <td>${phanTram.toFixed(1)}%</td>
-                           <td><input type="text" class="admin-input" value="${don.bks || ''}" placeholder="BKS..." onchange="updateTruongAdmin('${don.idUnique}', 'bks', this.value)"></td>
-                           <td><input type="text" class="admin-input" value="${don.tenLaiXe || ''}" placeholder="Tài xế..." onchange="updateTruongAdmin('${don.idUnique}', 'tenLaiXe', this.value)"></td>
-                           <td><input type="text" class="admin-input" value="${don.sdtLaiXe || ''}" placeholder="SĐT..." onchange="updateTruongAdmin('${don.idUnique}', 'sdtLaiXe', this.value)"></td>
-                           ${cotHanhDong}
-                       `;
-}
-} else {
-// PHÍA NHÂN VIÊN SALE
-if (don.trangThaiDon === "Hoàn thành") {
-row.innerHTML = `
-                           <td><b>${don.maVanDon}</b></td><td>${don.tenKhach}</td><td>${don.sdt}</td><td>${don.tenHang}</td>
-                           <td>${don.diemBoc}</td><td>${don.diemGiao}</td><td>${cKhach.toLocaleString('vi-VN')} đ</td><td>${don.vat}</td>
-                           <td>${don.cuocTong ? don.cuocTong.toLocaleString('vi-VN') + ' đ' : 'Không'}</td>
-                           <td><span class="status-badge badge-approved">Thành công ✔</span></td>`;
-} else {
-if (don.trangThaiDon === "Bị trả lại") row.className = 'status-rejected';
-
-let badge = '<span class="status-badge badge-pending">Chưa Up</span>';
-let btnUpDown = `<button class="btn-action btn-orange" onclick="upDonLenAdmin('${don.idUnique}')">Up đơn</button>`;
-
-// LOGIC BẢO MẬT PHÂN QUYỀN: Sale chỉ sửa được đơn khi Chưa Duyệt hoặc Bị Sếp Trả Lại
-let choPhepSua = true; 
-
-if (don.trangThaiDon === "Chờ duyệt") {
-badge = '<span class="status-badge badge-uploaded">Chờ duyệt...</span>';
-btnUpDown = `<button class="btn-action btn-orange" disabled>Đang đợi sếp</button>`;
-} else if (don.trangThaiDon === "Bị trả lại") {
-badge = '<span class="status-badge badge-rejected">Bị trả lại ❌</span>';
-} else if (don.trangThaiDon === "Điều vận bố trí xe") {
-badge = '<span class="status-badge badge-approved" style="background:#fee2e2; color:#b91c1c;">Đã duyệt 🚚</span>';
-btnUpDown = `<button class="btn-action btn-danger" disabled>Đã duyệt</button>`;
-choPhepSua = false; // Khóa sửa đơn
-} else if (don.trangThaiDon === "Đang vận chuyển") {
-badge = '<span class="status-badge badge-shipping">Đang đi 🛣</span>';
-btnUpDown = `<button class="btn-action btn-blue" disabled>Đang chạy</button>`;
-choPhepSua = false; // Khóa sửa đơn
-}
-
-// Hiện hoặc ẩn nút Sửa của Sale theo phân quyền trạng thái điều vận
-let btnSua = choPhepSua 
-? `<button class="btn-action btn-blue" onclick="kichHoatSuaDon('${don.idUnique}')">Sửa</button>`
-: `<button class="btn-action btn-gray" disabled style="cursor: not-allowed; opacity: 0.5;">Khóa sửa</button>`;
-
-row.innerHTML = `
-                           <td><a class="ma-vd-link" onclick="xemLaiChiTietDon('${don.idUnique}')"><b>${don.maVanDon}</b></a></td>
-                           <td>${don.tenKhach}</td><td>${don.sdt}</td><td>${don.tenHang}</td><td>${don.diemBoc}</td><td>${don.diemGiao}</td>
-                           <td>${cKhach.toLocaleString('vi-VN')} đ</td><td>${don.vat}</td><td>${don.cuocTong ? don.cuocTong.toLocaleString('vi-VN') + ' đ' : 'Không'}</td>
-                           <td>${badge} ${btnUpDown} ${btnSua}</td>`;
-}
-}
-
-if (don.trangThaiDon === "Hoàn thành") {
-tbodyDone.appendChild(row);
-} else {
-tbodyRunning.appendChild(row);
-}
-});
-
-if (LA_ADMIN) {
-tinhDongTongCong(tbodyRunning, runCK, runCX, runLN, runPCT, true);
-tinhDongTongCong(tbodyDone, doneCK, doneCX, doneLN, donePCT, false);
-}
-}
-
-function tinhDongTongCong(tbody, tk, tx, ln, arrPct, coHanhDong) {
-if (tbody.children.length > 0 && arrPct.length > 0) {
-const tbPct = arrPct.reduce((a, b) => a + b, 0) / arrPct.length;
-const tr = document.createElement('tr');
-tr.className = 'total-row';
-let phanDuHanhDong = coHanhDong ? `<td></td>` : "";
-tr.innerHTML = `
-                   <td>TỔNG CỘNG</td><td></td><td></td><td></td><td></td><td></td><td></td>
-                   <td>${tk.toLocaleString('vi-VN')} đ</td><td>${tx.toLocaleString('vi-VN')} đ</td>
-                   <td style="color: ${ln >= 0 ? 'green' : 'red'};">${ln.toLocaleString('vi-VN')} đ</td>
-                   <td>${tbPct.toFixed(1)}%</td><td></td><td></td><td></td>${phanDuHanhDong}`;
-tbody.appendChild(tr);
-}
-}
-
-function kichHoatSuaDon(idUnique) {
-const don = KHO_DU_LIEU_INTERNET[idUnique];
-if (!don) return;
-
-document.getElementById('edit-id-unique').value = idUnique;
-document.getElementById('ma-van-don').value = don.maVanDon;
-document.getElementById('ten-khach').value = don.tenKhach;
-document.getElementById('sdt').value = don.sdt;
-document.getElementById('ten-hang').value = don.tenHang;
-document.getElementById('diem-boc').value = don.diemBoc;
-document.getElementById('diem-giao').value = don.diemGiao;
-document.getElementById('chi-tiet-hang').value = don.chiTietHang;
-document.getElementById('trong-luong').value = don.trongLuong;
-document.getElementById('khoi-met').value = don.khoiMet;
-document.getElementById('yeu-cau-xe').value = don.yeuCauXe;
-document.getElementById('time-boc').value = don.timeBoc;
-document.getElementById('time-giao').value = don.timeGiao;
-document.getElementById('cuoc-khach').value = don.cuocKhach;
-document.getElementById('vat').value = don.vat;
-document.getElementById('ghi-chu').value = don.ghiChu;
-
-tinhToanCuocVAT();
-
-if (LA_ADMIN) {
-document.getElementById('form-title').innerText = "ADMIN ĐANG SỬA ĐƠN HỆ THỐNG: " + don.maVanDon;
-document.getElementById('btn-luu-don').innerText = "Admin Lưu Cập Nhật Đơn";
-} else {
-document.getElementById('form-title').innerText = "ĐANG SỬA ĐƠN HÀNG: " + don.maVanDon;
-document.getElementById('btn-luu-don').innerText = "Cập nhật đơn hàng";
-}
-
-document.getElementById('btn-huy-sua').style.display = "inline-block";
-document.getElementById('btn-lam-moi').style.display = "none";
-document.getElementById('khu-vuc-form-sale').scrollIntoView({ behavior: 'smooth' });
-}
-
-// Logic thay đổi trạng thái kèm ràng buộc khóa Cước khách & Cước xe khi Hoàn thành
-function chuyenTrangThaiDon(idUnique, trangThaiMoi) {
-const don = KHO_DU_LIEU_INTERNET[idUnique];
-if (!don) return;
-
-if (trangThaiMoi === 'Hoàn thành') {
-const cKhach = parseFloat(don.cuocKhach) || 0;
-const cXe = parseFloat(don.cuocXe) || 0;
-
-// THẮT CHẶT QUY TRÌNH: Kiểm tra điều kiện số tiền trước khi chốt doanh thu
-if (cKhach <= 0 || cXe <= 0) {
-alert("Không thể hoàn thành đơn hàng! Vui lòng điền đầy đủ thông tin Cước khách và Cước xe trước khi chốt doanh số.");
-return;
-}
-}
-
-let msg = "";
-if (trangThaiMoi === 'Điều vận bố trí xe') msg = "Xác nhận DUYỆT ĐƠN HÀNG này và chuyển sang màu ĐỎ? (Hệ thống sẽ khóa quyền sửa đổi của Sale)";
-if (trangThaiMoi === 'Đang vận chuyển') msg = "Xác nhận đơn hàng ĐANG VẬN CHUYỂN và chuyển sang màu XANH?";
-if (trangThaiMoi === 'Hoàn thành') msg = "Xác nhận HOÀN THÀNH đơn hàng và đưa vào kho doanh số chốt sổ?";
-if (trangThaiMoi === 'Bị trả lại') msg = "Xác nhận TRẢ LẠI đơn hàng này cho Sale sửa đổi?";
-
-if (confirm(msg)) {
-database.ref('orders/' + idUnique).update({ trangThaiDon: trangThaiMoi });
-}
-}
-
-function huyChuyenDon(idUnique) {
-if (confirm("CẢNH BÁO: Bạn chắc chắn muốn HỦY CHUYẾN đơn hàng này? Đơn hàng sẽ biến mất hoàn toàn khỏi hệ thống!")) {
-database.ref('orders/' + idUnique).remove();
-}
-}
-
-function updateTruongAdmin(idUnique, truongDuLieu, giaTri) {
-let obj = {}; obj[truongDuLieu] = giaTri;
-database.ref('orders/' + idUnique).update(obj);
-}
-
-function upDonLenAdmin(idUnique) {
-if (confirm("Bạn và Khách hàng phải xác nhận lại thông tin trước khi Up đơn, bạn chắc chắn Up đơn?")) {
-database.ref('orders/' + idUnique).update({ trangThaiDon: "Chờ duyệt", daUpLenAdmin: true });
-}
-}
-
-function adminXoaDon(idUnique) {
-if (confirm('CẢNH BÁO ADMIN: Hành động này sẽ xóa vĩnh viễn đơn lưu trữ khỏi hệ thống?')) {
-database.ref('orders/' + idUnique).remove();
-}
-}
-
-function xemLaiChiTietDon(idUnique) {
-const don = KHO_DU_LIEU_INTERNET[idUnique];
-if (!don) return;
-
-let htmlRows = "";
-function thuThapDong(tieuDe, giaTri) {
-if (giaTri && giaTri !== "") return `<tr><td>${tieuDe}</td><td>${giaTri}</td></tr>`;
-return "";
-}
-
-htmlRows += thuThapDong("Mã vận đơn", `<strong style="color:red;">${don.maVanDon}</strong>`);
-htmlRows += thuThapDong("Tên khách hàng", don.tenKhach);
-htmlRows += thuThapDong("Số điện thoại", don.sdt);
-htmlRows += thuThapDong("Tên hàng hoá", don.tenHang);
-htmlRows += thuThapDong("Điểm bốc hàng", don.diemBoc);
-htmlRows += thuThapDong("Điểm giao hàng", don.diemGiao);
-htmlRows += thuThapDong("Chi tiết hàng hoá", don.chiTietHang);
-htmlRows += thuThapDong("Trọng lượng", don.trongLuong);
-htmlRows += thuThapDong("Khối hoặc mét xe", don.khoiMet);
-htmlRows += thuThapDong("Yêu cầu xe", `<strong>${don.yeuCauXe}</strong>`);
-htmlRows += thuThapDong("Time bốc", don.timeBoc);
-htmlRows += thuThapDong("Time giao", don.timeGiao);
-if (don.cuocKhach > 0) htmlRows += `<tr><td>Cước khách</td><td>${don.cuocKhach.toLocaleString('vi-VN')} đ</td></tr>`;
-htmlRows += `<tr><td>VAT</td><td>${don.vat}</td></tr>`;
-if (don.vat === 'Có' && don.cuocKhach > 0) htmlRows += `<tr><td>Cước tổng</td><td><strong>${don.cuocTong.toLocaleString('vi-VN')} đ</strong></td></tr>`;
-htmlRows += thuThapDong("Ghi chú", don.ghiChu);
-
-document.getElementById('khu-vuc-lenh-xe').innerHTML = `<div class="vertical-table-card" style="border-color: #10b981;"><h3 style="color:#10b981; border-bottom-color:#d1fae5;">XEM CHI TIẾT ĐƠN: ${don.maVanDon}</h3><table class="v-table">${htmlRows}</table></div>`;
-document.getElementById('khu-vuc-tao-lenh').scrollIntoView({ behavior: 'smooth' });
-}
+    function showImg(src) {
+        document.getElementById('bigImg').src = src;
+        document.getElementById('imgPopup').style.display = 'flex';
+    }
 </script>
 </body>
 </html>
